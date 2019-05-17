@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+
+.space-h {
+    height: 20px;
+}
+.hidden-file {
+    display: none !important;
+}
+
+p.xpath-error {
+  border: 1px solid #881515;
+}
+p.xpath-error > span {
+  padding-left: 15px;
+  display: block;
+}
+
+p.xpath-error > span.xpath-header {
+  border-bottom: 1px solid #881515;
+  font-weight: bold;
+  color: #881515;
+  background: #f5c6cb;
+}
+.btn.save-file {
+  margin-left: 10px;
+}
+#parsed-data {
+  font-size: 0.8em;
+}
+span.obj-expander {
+  color: blue;
+}
+span.obj-expander:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.table-danger.critical {
+  font-weight: bolder;
+  color: #881515;
+  background: #f46a79;
+}
+
+.table-hover .table-danger.critical:hover {
+  background-color: #f38995;
+}
+
+table#parsed-data td.action {
+  width: 10%;
+}
+table#parsed-data td.xpath-value {
+  word-break: break-word;
+  width: 45%;
+}
+
