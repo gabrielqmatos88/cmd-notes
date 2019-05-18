@@ -3,102 +3,72 @@
 		<div class="col-md-8 offset-md-2" >
 			<div class="page-header">
 				<h1>
-					XMO tools
+					XMO cmd
 				</h1>
-			</div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <ul class="cmd-list">
+            <li class="bt-area">
+              <div class="button-box text-right">
+                  <button class="btn btn-success btn-small" (click)="setCmd()">+</button>
+              </div>
+            </li>
+            <li class="cmd-item" *ngFor="let item of commandList" (click)="setCmd(item)">
+                {{ item.name }}
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <div class="row" >
+            <div class="col-sm-12">
+              <form role="form" name="cmdForm" #form="ngForm" [hidden]="!selectedCommand" (submit)="save()" >
+              <div class="form-group" [ngClass]="{ 'input-error': !name.valid && (name.dirty || submitted) }">
+                <label for="name">
+                  Name
+                  <span class="field-error" *ngIf="!name.valid  && (name.dirty || submitted)">Preencha o nome</span>
+                </label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="commandName" (change)="updateName($event)" #name="ngModel" required />
+
+              </div>
+              <div class="form-group" [ngClass]="{ 'input-error': !cmd.valid && (cmd.dirty || submitted) }">
+                <label for="cmd">
+                  Command Expression
+                  <span class="field-error" *ngIf="!cmd.valid && (cmd.dirty || submitted)">Preencha o comando</span>
+                </label>
+                <input type="text" class="form-control" id="cmd" name="cmd" [(ngModel)]="commandStr" (change)="updateCommandStr($event)" #cmd="ngModel" required />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Save
+              </button>
+              <button type="button" class="btn btn-primary bt2" (click)="doPreview()">
+                Preview
+              </button>
+            </form>
+          </div>
+            <div class="col-md-12 preview-container border rounded" *ngIf="!!selectedCommand && preview && !!selectedCommand.parameters && selectedCommand.parameters.length">
+              <h3>Preview</h3>
+              <div class="row" *ngFor="let p of selectedCommand.parameters; let index=index">
+                <div class="col-md-8">
+                    <div class="form-group" >
+                      <label for="{{index}}-{{p.name}}">
+                        {{p.name}}
+                      </label>
+                      <input type="text" class="form-control" name="{{index}}-{{p.name}}" [(ngModel)]="p.value" required />
+                    </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary" (click)="generateCmd()">
+                  Generate
+                </button>
+              <p *ngIf="!!generatedCommand" class="cmd-result border rounded">
+                {{ generatedCommand }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-8 offset-md-2">
-			<button type="button" class="btn btn-sm btn-primary" (click)="selectFile()">
-				Import har file
-      </button>
-      <button *ngIf="foundErrors && foundErrors.length" type="button" class="btn btn-sm btn-primary save-file" (click)="exportErrors()">
-				Export invalid xpaths
-      </button>
-      <span *ngIf="!!selectedFileName">
-        &nbsp; {{selectedFileName}}
-      </span>
-      <!--<button type="button" *ngIf="parsedRequests && parsedRequests.length" class="btn btn-sm btn-light save-file" (click)="screenshot()">-->
-        <!--Save file-->
-      <!--</button>-->
-      <div class="Block">
-        <input type='file' class="hidden-file" #fileSelector (change)="fileChanged($event)">
-      </div>
-      <div class="space-h"></div>
-      <div class="alert alert-info" *ngIf="!parseError && (!parsedRequests || !parsedRequests.length)">
-        There's no data.
-      </div>
-      <div class="alert alert-danger" *ngIf="!!parseError">
-        Parse error.
-      </div>
-			<table id="parsed-data" class="table table-bordered table-hover table-sm" *ngIf="parsedRequests && parsedRequests.length">
-				<thead>
-        <tr>
-          <th colspan="4">
-            {{ title }}
-          </th>
-        </tr>
-					<tr>
-						<th>
-							Method
-						</th>
-						<th>
-							Time (ms)
-						</th>
-						<th>
-							Status
-						</th>
-            <th>
-              Response
-            </th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let req of parsedRequests" >
-						<td>
-							{{ req.method }}
-						</td>
-						<td>
-							{{ req.time}}
-						</td>
-						<td [ngClass]="getTimeClass(req)">
-							{{ req.timeTx }}
-						</td>
-            <td>
-              <span *ngIf="!!req.resource">
-                {{ req.resource }}
-              </span>
-              <table class="table table-bordered table-hover" *ngIf="!req.resource">
-                <thead>
-                <tr>
-                  <th>Action</th>
-                  <th>Xpath</th>
-                  <th>Value</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let r of req.result">
-                  <td class="action"> {{ r.method }}</td>
-                  <td class="xpath-value">{{ r.xpath }}</td>
-                  <td class="xpath-value">
-                    {{ r.value === null || r.value === undefined ? 'null': r.value }}
-                    <span class="obj-expander" *ngIf="isObject(r)" (click)="expandIt(r)">expand</span>
-                  </td>
-                </tr>
-                <ng-container *ngIf="!!req.errors && !!req.errors.length">
-                  <tr class="table-danger bolder" *ngFor="let e of req.errors">
-                    <td class="action"> {{ e.method }}</td>
-                    <td class="xpath-value">{{ e.xpath }}</td>
-                    <td class="bolder xpath-value">{{ e.error.description }} </td>
-                  </tr>
-                </ng-container>
-                </tbody>
-              </table>
-            </td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+  </div>
+
 </div>

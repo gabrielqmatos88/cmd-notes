@@ -1,0 +1,54 @@
+.button-box {
+    padding: 5px;
+}
+ul.cmd-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-right: 1px solid #dee2e6;
+    padding-right: 25px;
+    margin-top: 15px;
+}
+
+ul.cmd-list > li {
+    padding: 5px 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+ul.cmd-list > li.bt-area {
+  padding-right: 0;
+  border: none;
+}
+
+span.field-error {
+  color: red;
+  font-size: 0.8em;
+  display: block;
+}
+
+.input-error {
+  border-color: red;
+}
+
+.bt2 {
+  margin-left: 10px;
+}
+
+.preview-container {
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.cmd-list li.cmd-item:hover {
+  background: #dee2e6;
+  cursor: pointer;
+}
+
+p.cmd-result {
+  padding: 15px;
+  font-weight: bold;
+  background: #f6f6f6;
+  margin-top: 15px;
+}
+
+
