@@ -4,7 +4,8 @@
 			<div class="page-header">
 				<h1>
 					XMO cmd
-				</h1>
+        </h1>
+        <help-tools></help-tools>
       </div>
       <div class="row">
         <div class="col-md-3">
@@ -22,7 +23,21 @@
         <div class="col-md-9">
           <div class="row" >
             <div class="col-sm-12">
-              <form role="form" name="cmdForm" #form="ngForm" [hidden]="!selectedCommand" (submit)="save()" >
+              <ul class="nav nav-tabs cmd-tabs" *ngIf="!!selectedCommand">
+                <li class="nav-item" >
+                  <a class="nav-link" [ngClass]="{ 'active': !preview }" (click)="preview = false">Edit</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{ 'active': preview }" (click)="doPreview()">Preview</a>
+                </li>
+              </ul>
+              <h3 class="cmd-name" [hidden]="!selectedCommand" >
+                {{ commandName || 'Novo comando' }}
+                <span class="pull-right">
+                  delete
+                </span>
+              </h3>
+              <form role="form" name="cmdForm" #form="ngForm" [hidden]="!selectedCommand || preview" >
               <div class="form-group" [ngClass]="{ 'input-error': !name.valid && (name.dirty || submitted) }">
                 <label for="name">
                   Name
@@ -31,28 +46,30 @@
                 <input type="text" class="form-control" id="name" name="name" [(ngModel)]="commandName" (change)="updateName($event)" #name="ngModel" required />
 
               </div>
-              <div class="form-group" [ngClass]="{ 'input-error': !cmd.valid && (cmd.dirty || submitted) }">
-                <label for="cmd">
-                  Command Expression
-                  <span class="field-error" *ngIf="!cmd.valid && (cmd.dirty || submitted)">Preencha o comando</span>
-                </label>
-                <input type="text" class="form-control" id="cmd" name="cmd" [(ngModel)]="commandStr" (change)="updateCommandStr($event)" #cmd="ngModel" required />
+                <div class="form-group" [ngClass]="{ 'input-error': !cmd.valid && (cmd.dirty || submitted) }">
+                  <label for="cmd">
+                    Command Expression
+                    <span class="field-error" *ngIf="!cmd.valid && (cmd.dirty || submitted)">Preencha o comando</span>
+                  </label>
+                  <!-- <input type="text" class="form-control" id="cmd" name="cmd" [(ngModel)]="commandStr" (change)="updateCommandStr($event)" #cmd="ngModel" required /> -->
+                  <textarea class="form-control rounded-0" id="cmd" name="cmd" rows="3" [(ngModel)]="commandStr" (change)="updateCommandStr($event)" #cmd="ngModel" required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">
+              <toaster #saveAlert></toaster>
+              <button type="button" class="btn btn-primary" (click)="save()">
                 Save
               </button>
-              <button type="button" class="btn btn-primary bt2" (click)="doPreview()">
-                Preview
+              <button type="button" class="btn btn-danger bt2" (click)="excluir()">
+                Excluir
               </button>
             </form>
           </div>
             <div class="col-md-12 preview-container border rounded" *ngIf="!!selectedCommand && preview && !!selectedCommand.parameters && selectedCommand.parameters.length">
-              <h3>Preview</h3>
-              <div class="row" *ngFor="let p of selectedCommand.parameters; let index=index">
+              <h4>Preview</h4>
+              <div class="row" *ngFor="let p of selectedCommand.parameters; let index=index;">
                 <div class="col-md-8">
                     <div class="form-group" >
                       <label for="{{index}}-{{p.name}}">
-                        {{p.name}}
+                        {{p.label}}
                       </label>
                       <input type="text" class="form-control" name="{{index}}-{{p.name}}" [(ngModel)]="p.value" required />
                     </div>
@@ -61,7 +78,7 @@
               <button type="button" class="btn btn-primary" (click)="generateCmd()">
                   Generate
                 </button>
-              <p *ngIf="!!generatedCommand" class="cmd-result border rounded">
+              <p *ngIf="generatedCommand" class="cmd-result border rounded">
                 {{ generatedCommand }}
               </p>
             </div>

@@ -33,6 +33,8 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
   ];
 
+  @ViewChild('saveAlert')
+  saveAlert: any;
   constructor() {}
   generatedCommand =  '';
   commandName = '';
@@ -63,16 +65,25 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
     this.selectedCommand.parameters = this.selectedCommand.parameters || [];
   }
+  private splitCamelCaseWithAbbreviations(s){
+    return s.split(/([A-Z][a-z]+)/).filter(function(e){return e}).join(' ');
+  }
   private parseParameters(command: ICommand): IParameter[] {
-    const parameters =  (command.cmdStr).match(/\$\{\s*([a-z0-9\-_]+)\s*\}/ig) || [];
+    const parameters =  (command.cmdStr).match(/\$\{\s*([a-z0-9\-_]+)(:[a-z\.\-\_0-9\,\s\@]+)?\s*\}/ig) || [];
     const parsedParameters: IParameter[] = [];
     for (let i = 0; i < parameters.length; i++) {
       const par = parameters[i];
-      const paramName = par.replace(/[\$\{\}]/g, '').trim();
+      let defaultValue;
+      if (/:[a-z\.\-\_0-9\,\s\@]+/.test(par)) {
+        defaultValue = /:[a-z\.\-\_0-9\,\s\@]+/.exec(par)[0].replace(':', '').trim();
+      }
+      const paramName = par.replace(/[\$\{\}]/g, '').replace(/:[a-z\.\-\_0-9\,\s\@]+/, '').trim();
       if (!parsedParameters.find( p => p.name === paramName)) {
         parsedParameters.push({
           name: paramName,
-          value: ''
+          label: this.splitCamelCaseWithAbbreviations(paramName || ''),
+          value: defaultValue || '',
+          defaultValue: defaultValue
         });
       }
     }
@@ -98,10 +109,11 @@ export class AppComponent implements AfterViewInit, OnInit {
     let cmd = this.selectedCommand.cmdStr || '';
     for (let i = 0; i < this.selectedCommand.parameters.length; i++) {
       const p = this.selectedCommand.parameters[i];
-      const combinedExp = new RegExp('\\$\\{\\s*' + p.name + '\\s*\\}', 'gi');
+      const combinedExp = new RegExp('\\$\\{\\s*' + p.name + '(:[a-z\\.\\-\\_0-9\\,\\s\\@]+)?\\s*\\}', 'gi');
       cmd = cmd.replace(combinedExp, p.value);
     }
     this.generatedCommand = cmd;
+    return cmd;
   }
 
   save() {
@@ -113,11 +125,23 @@ export class AppComponent implements AfterViewInit, OnInit {
       }
       localStorage.setItem('cmdlist', JSON.stringify(this.commandList));
       this.submitted = false;
+      this.saveAlert.show('Salvo com sucesso', 'alert-success');
+    } else {
+      this.saveAlert.show('Preencha os dados', 'alert-danger');
+    }
+  }
+  excluir() {
+    if (!!this.selectedCommand) {
+      if (!this.selectedCommand.isNew) {
+        this.commandList = this.commandList.filter( c => c !== this.selectedCommand);
+        localStorage.setItem('cmdlist', JSON.stringify(this.commandList));
+      }
+      this.selectedCommand = null;
     }
   }
   ngAfterViewInit() {
   }
-  ngOnInit(){
+  ngOnInit() {
     const loaded = localStorage.getItem('cmdlist');
     if (!!loaded) {
       this.commandList = JSON.parse(loaded);

@@ -35,8 +35,9 @@ span.field-error {
 }
 
 .preview-container {
-  margin-top: 20px;
   padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: 15px;
 }
 
 .cmd-list li.cmd-item:hover {
@@ -46,9 +47,25 @@ span.field-error {
 
 p.cmd-result {
   padding: 15px;
-  font-weight: bold;
   background: #f6f6f6;
   margin-top: 15px;
 }
+/*  */
+.cmd-tabs {
+  margin-bottom: 25px;
+}
 
+.cmd-tabs a {
+  cursor: pointer;
+}
+
+.cmd-tabs .nav-link.active {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+h3.cmd-name {
+  width: 100%;
+}
 
