@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "xmo-har-parser": {
+    "cmd-notes": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/xmo-har-parser",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -57,18 +57,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "xmo-har-parser:build"
+            "browserTarget": "cmd-notes:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "xmo-har-parser:build:production"
+              "browserTarget": "cmd-notes:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "xmo-har-parser:build"
+            "browserTarget": "cmd-notes:build"
           }
         },
         "test": {
@@ -102,7 +102,7 @@
         }
       }
     },
-    "xmo-har-parser-e2e": {
+    "cmd-notes-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -110,11 +110,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "xmo-har-parser:serve"
+            "devServerTarget": "cmd-notes:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "xmo-har-parser:serve:production"
+              "devServerTarget": "cmd-notes:serve:production"
             }
           }
         },
@@ -130,5 +130,5 @@
       }
     }
   },
-  "defaultProject": "xmo-har-parser"
+  "defaultProject": "cmd-notes"
 }

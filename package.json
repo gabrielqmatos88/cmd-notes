@@ -1,5 +1,5 @@
 {
-  "name": "xmo-har-parser",
+  "name": "cmd-notes",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "portable": "ng build --prod && cp index.js dist/xmo-har-parser && pkg -o xmo-tool . && tar -zcf xmo-tool.tar.gz xmo-tool*"
+    "portable": "ng build --prod && cp index.js dist/cmd-notes && pkg -o xmo-tool . && tar -zcf xmo-tool.tar.gz xmo-tool*"
   },
   "private": true,
   "dependencies": {
