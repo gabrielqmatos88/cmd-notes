@@ -1,1 +1,12 @@
-md5 converter
+<h4>MD5 Converter</h4>
+<form role="form" name="md5Form" >
+  <div class="form-group">
+    <label for="md5Field">
+      Value
+    </label>
+    <input type="text" class="form-control" id="md5Field" name="md5Field" [(ngModel)]="value" (keyup)="convert()" />
+  </div>
+  <div *ngIf="!!result">
+    <p>{{ result }}</p>
+  </div>
+</form>

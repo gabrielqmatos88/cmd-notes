@@ -69,3 +69,29 @@ h3.cmd-name {
   width: 100%;
 }
 
+.cmd-title .fa-trash {
+  display: none;
+}
+.cmd-title:hover .fas.fa-trash {
+  display: inherit;
+  cursor: pointer;
+  color: #f37373;;
+}
+
+.cmd-title .fas.fa-trash:hover {
+  color: #d61c1c;
+}
+
+#cmd {
+  height: auto;
+  resize: none;
+}
+
+pre.cmd-result {
+  margin: 0;
+  margin-top: 15px;
+  padding: 15px;
+  outline: 0;
+  border: 0;
+}
+

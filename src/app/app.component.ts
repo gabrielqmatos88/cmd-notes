@@ -43,16 +43,17 @@ export class AppComponent implements AfterViewInit, OnInit {
   submitted = false;
   preview = false;
   setCmd(command?: ICommand) {
-    if (command === this.selectedCommand) {
+    if (!!command && command === this.selectedCommand) {
       return;
     }
     this.form.resetForm();
-    this.preview = false;
+    this.preview = true;
     this.submitted = false;
     this.generatedCommand = '';
     if (!command) {
       this.commandName = '';
       this.commandStr = '';
+      this.preview = false;
       this.selectedCommand = {
         name: this.commandName,
         cmdStr: this.commandStr,
@@ -64,6 +65,9 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.selectedCommand = command;
     }
     this.selectedCommand.parameters = this.selectedCommand.parameters || [];
+    if (!this.selectedCommand.isNew && !this.selectedCommand.parameters.length) {
+      this.generateCmd();
+    }
   }
   private splitCamelCaseWithAbbreviations(s){
     return s.split(/([A-Z][a-z]+)/).filter(function(e){return e}).join(' ');
@@ -96,6 +100,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   updateCommandStr(e) {
     this.selectedCommand.cmdStr = e.target.value;
+    this.autoGrowTextZone(e);
   }
 
   doPreview() {
@@ -103,6 +108,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     if (!!this.selectedCommand) {
       this.selectedCommand.parameters = this.parseParameters(this.selectedCommand);
     }
+    this.generatedCommand = '';
   }
 
   generateCmd(){
@@ -116,6 +122,12 @@ export class AppComponent implements AfterViewInit, OnInit {
     return cmd;
   }
 
+  autoGrowTextZone(e) {
+    e.target.style.overflow = 'hidden';
+    e.target.style.height = '0px';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  }
+
   save() {
     this.submitted = true;
     if (this.form.valid) {
@@ -123,9 +135,14 @@ export class AppComponent implements AfterViewInit, OnInit {
         this.commandList.push(this.selectedCommand);
         this.selectedCommand.isNew = null;
       }
+      // this.selectedCommand.cmdStr = this.formatForSave(this.selectedCommand.cmdStr);
       localStorage.setItem('cmdlist', JSON.stringify(this.commandList));
       this.submitted = false;
       this.saveAlert.show('Salvo com sucesso', 'alert-success');
+      this.doPreview();
+      if (!this.selectedCommand.parameters || !this.selectedCommand.parameters.length) {
+        this.generateCmd();
+      }
     } else {
       this.saveAlert.show('Preencha os dados', 'alert-danger');
     }
