@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>XmoHarParser</title>
+  <base href="https://gabrielqmatos88.github.io/cmd-notes/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="styles.47e134219125a6b46f82.css"></head>
+<body>
+  <app-root></app-root>
+<script type="text/javascript" src="runtime.06daa30a2963fa413676.js"></script><script type="text/javascript" src="polyfills.f4b78b65941f8063fd57.js"></script><script type="text/javascript" src="scripts.57d1618877bf6e065f09.js"></script><script type="text/javascript" src="main.0eb6f89c7c0b63d596a4.js"></script></body>
+<script>
+  (function(){
+    var redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
+    if (redirect && redirect != location.href) {
+      history.replaceState(null, null, redirect);
+      // REMOVE THIS - just showing the redirect route in the UI
+      document.body.setAttribute('message', 'This page was redirected by 404.html, from the route: ' + redirect);
+    }
+    else {
+      // REMOVE THIS - just showing the redirect route in the UI
+      document.body.setAttribute('message', 'This page was loaded directly from the index.html file');
+    }
+  })();
+</script>
+</html>
