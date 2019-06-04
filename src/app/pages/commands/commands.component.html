@@ -3,11 +3,15 @@
   <table *ngIf="!selectedCommand" class="table table-striped">
     <thead>
       <tr>
-        <th colspan="2">Command list</th>
+        <th colspan="2">
+          <div class="form-group">
+            <input class="form-control" type="text" name="term" [(ngModel)]="term">
+          </div>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cmd of commandList">
+      <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
         <td>{{ cmd.name }}</td>
         <td><i class="fas fa-file-code" (click)="setCmd(cmd)"> &nbsp;</i><i class="fas fa-trash"></i></td>
       </tr>

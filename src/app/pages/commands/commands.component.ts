@@ -11,6 +11,7 @@ import { ICommand, IParameter } from 'src/app/icommand';
 export class CommandsComponent implements OnInit {
   @ViewChild('form', { read: NgForm })
   form: NgForm;
+  term = '';
   commandList: ICommand[] = [
     {
       name: 'XMO get',
