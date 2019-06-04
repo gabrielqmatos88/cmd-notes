@@ -5,6 +5,11 @@
       <tr>
         <th colspan="2">
           <div class="form-group">
+            <button class="btn btn-success" (click)="setCmd()">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div class="form-group">
             <input class="form-control" type="text" name="term" [(ngModel)]="term">
           </div>
         </th>
@@ -13,7 +18,7 @@
     <tbody>
       <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
         <td>{{ cmd.name }}</td>
-        <td><i class="fas fa-file-code" (click)="setCmd(cmd)"> &nbsp;</i><i class="fas fa-trash"></i></td>
+        <td class="text-right cmd-icons"><i class="fas fa-file-code" (click)="setCmd(cmd)"> &nbsp;</i><i class="fas fa-trash"></i></td>
       </tr>
     </tbody>
   </table>

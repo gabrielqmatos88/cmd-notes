@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod && ngh .",
+    "deploy": "ng build --prod --base-href=\"/cmd-notes/\" && ngh .",
     "portable": "ng build --prod && cp index.js dist/cmd-notes && pkg -o xmo-tool . && tar -zcf xmo-tool.tar.gz xmo-tool*"
   },
   "private": true,

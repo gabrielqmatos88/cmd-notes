@@ -1,5 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
+.logo {
+  float: left;
+  background-image: url(/assets/cmd.png);
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  margin-top: 11px;
+  margin-right: 10px;
+}
+
 .space-h {
     height: 20px;
 }

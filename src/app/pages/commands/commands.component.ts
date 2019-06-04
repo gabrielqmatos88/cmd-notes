@@ -110,7 +110,7 @@ export class CommandsComponent implements OnInit {
     if (!!this.selectedCommand) {
       this.selectedCommand.parameters = this.parseParameters(this.selectedCommand);
     }
-    this.generatedCommand = '';
+    // this.generatedCommand = '';
   }
 
   generateCmd(){

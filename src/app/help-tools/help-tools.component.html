@@ -21,7 +21,7 @@
             {{ selectedTool || 'Select a tool' }}
           </button>
           <div class="dropdown-menu" aria-labelledby="toolDropdown">
-            <a class="dropdown-item" href="#" *ngFor="let tool of availableTools" (click)="selectedTool=tool">{{ tool }}</a>
+            <button class="dropdown-item" *ngFor="let tool of availableTools" (click)="selectedTool=tool">{{ tool }}</button>
           </div>
         </div>
         <div class="tool-container">
