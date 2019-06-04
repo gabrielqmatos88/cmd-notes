@@ -11,13 +11,23 @@ ul.cmd-list {
 }
 
 ul.cmd-list > li {
-    padding: 5px 10px;
-    border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
 }
 
 ul.cmd-list > li.bt-area {
   padding-right: 0;
   border: none;
+}
+
+.cmd-item > a {
+  display: block;
+  padding-left: 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.cmd-item > a.active {
+  color: #007bff;;
 }
 
 span.field-error {
@@ -75,7 +85,7 @@ h3.cmd-name {
 .cmd-title:hover .fas.fa-trash {
   display: inherit;
   cursor: pointer;
-  color: #f37373;;
+  color: #f37373;
 }
 
 .cmd-title .fas.fa-trash:hover {
@@ -93,5 +103,31 @@ pre.cmd-result {
   padding: 15px;
   outline: 0;
   border: 0;
+}
+
+.cmd-item-text, .cmd-item-delete {
+  float: left;
+}
+
+.cmd-item-text {
+  width: 90%;
+}
+
+.cmd-item .cmd-item-delete {
+  display: none;
+}
+
+.cmd-item:hover .cmd-item-delete {
+  display: block;
+}
+
+.cmd-item-delete {
+  width: 10%;
+  cursor: pointer;
+  color: #f37373;
+}
+
+.cmd-item-delete:hover {
+  color: #d61c1c;
 }
 

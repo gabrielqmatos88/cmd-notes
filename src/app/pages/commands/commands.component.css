@@ -1,0 +1,133 @@
+.button-box {
+  padding: 5px;
+}
+ul.cmd-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-right: 1px solid #dee2e6;
+  padding-right: 25px;
+  margin-top: 15px;
+}
+
+ul.cmd-list > li {
+border-bottom: 1px solid #dee2e6;
+}
+
+ul.cmd-list > li.bt-area {
+padding-right: 0;
+border: none;
+}
+
+.cmd-item > a {
+display: block;
+padding-left: 15px;
+text-decoration: none;
+color: #333;
+}
+
+.cmd-item > a.active {
+color: #007bff;;
+}
+
+span.field-error {
+color: red;
+font-size: 0.8em;
+display: block;
+}
+
+.input-error {
+border-color: red;
+}
+
+.bt2 {
+margin-left: 10px;
+}
+
+.preview-container {
+padding-top: 20px;
+padding-bottom: 20px;
+margin-left: 15px;
+}
+
+.cmd-list li.cmd-item:hover {
+background: #dee2e6;
+cursor: pointer;
+}
+
+p.cmd-result {
+padding: 15px;
+background: #f6f6f6;
+margin-top: 15px;
+}
+/*  */
+.cmd-tabs {
+margin-bottom: 25px;
+}
+
+.cmd-tabs a {
+cursor: pointer;
+}
+
+.cmd-tabs .nav-link.active {
+color: #fff;
+background-color: #007bff;
+border-color: #007bff;
+}
+
+h3.cmd-name {
+width: 100%;
+}
+
+.cmd-title .fa-trash {
+display: none;
+}
+.cmd-title:hover .fas.fa-trash {
+display: inherit;
+cursor: pointer;
+color: #f37373;
+}
+
+.cmd-title .fas.fa-trash:hover {
+color: #d61c1c;
+}
+
+#cmd {
+height: auto;
+resize: none;
+}
+
+pre.cmd-result {
+margin: 0;
+margin-top: 15px;
+padding: 15px;
+outline: 0;
+border: 0;
+}
+
+.cmd-item-text, .cmd-item-delete {
+float: left;
+}
+
+.cmd-item-text {
+width: 90%;
+}
+
+.cmd-item .cmd-item-delete {
+display: none;
+}
+
+.cmd-item:hover .cmd-item-delete {
+display: block;
+}
+
+.cmd-item-delete {
+width: 10%;
+cursor: pointer;
+color: #f37373;
+}
+
+.cmd-item-delete:hover {
+color: #d61c1c;
+}
+
