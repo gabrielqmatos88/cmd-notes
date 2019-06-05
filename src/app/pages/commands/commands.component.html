@@ -39,7 +39,9 @@
     <tbody>
       <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
         <td>{{ cmd.name }}</td>
-        <td class="text-right cmd-icons"><i class="fas fa-file-code" (click)="setCmd(cmd)"> &nbsp;</i><i class="fas fa-trash"></i></td>
+        <td class="text-right cmd-icons">
+          <i class="fas fa-file-code" (click)="setCmd(cmd)"> &nbsp;</i>
+          <i class="fas fa-trash" (click)="excluir()"></i></td>
       </tr>
     </tbody>
   </table>
@@ -61,7 +63,7 @@
         </h3>
       </div>
       <div class="col-md-1">
-        <span class="pull-right fas fa-times" (click)="selectedCommand = null">
+        <span class="pull-right fas fa-times" (click)="selectedCommand = null; term = ''">
         </span>
       </div>
     </div>
