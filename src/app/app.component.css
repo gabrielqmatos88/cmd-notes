@@ -134,3 +134,18 @@ pre.cmd-result {
   padding-left: 40px;
 }
 
+.list-group {
+  padding-top:20px;
+  padding-left: 25px;
+ }
+ .list-group i {
+   margin-right: 15px;
+ }
+
+ .lead {
+  margin:auto;
+  left:0;
+  right:0;
+  padding-top:10%;
+ }
+

@@ -16,33 +16,10 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-md-4">
-          <ul class="cmd-list">
-            <li class="cmd-item">
-              <a [routerLink]="['/commands']" routerLinkActive="active">Commands</a>
-            </li>
-            <li class="cmd-item">
-              <a [routerLink]="['/wiki']" routerLinkActive="active">Wiki</a>
-            </li>
-          </ul>
-          <!-- <ul class="cmd-list">
-            <li class="bt-area">
-              <div class="button-box text-right">
-                  <button class="btn btn-success btn-small" (click)="setCmd()">
-                    <i class="fas fa-plus"></i>
-                  </button>
-              </div>
-            </li>
-            <li class="cmd-item" *ngFor="let item of commandList" (click)="setCmd(item)">
-                <div class="row">
-                  <div class="cmd-item-text">
-                    {{ item.name }}
-                  </div>
-                  <div class="cmd-item-delete">
-                    <i class="fas fa-trash text-right" (click)="excluir(item)"></i>
-                  </div>
-                </div>
-            </li>
-          </ul> -->
+            <div class="list-group">
+              <a [routerLink]="['/commands']" routerLinkActive="active" class="list-group-item active"><i class="fa fa-terminal"></i> <span>Commands</span></a>
+              <a [routerLink]="['/wiki']" routerLinkActive="active" class="list-group-item"><i class="fas fa-book"></i> <span>Wiki</span></a>
+            </div>
         </div>
         <div class="col-xs-12 col-md-8 main-content">
           <router-outlet></router-outlet>

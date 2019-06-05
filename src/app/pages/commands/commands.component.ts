@@ -44,6 +44,7 @@ export class CommandsComponent implements OnInit {
   selectedCommand: ICommand;
   submitted = false;
   preview = false;
+  action: string = '';
   setCmd(command?: ICommand) {
     if (!!command && command === this.selectedCommand) {
       return;
