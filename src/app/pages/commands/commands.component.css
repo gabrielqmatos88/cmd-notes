@@ -98,19 +98,20 @@ resize: none;
 }
 
 pre.cmd-result {
-margin: 0;
-margin-top: 15px;
-padding: 15px;
-outline: 0;
-border: 0;
+  margin: 0;
+  margin-top: 15px;
+  padding: 15px;
+  outline: 0;
+  border: 0;
+  position: relative;
 }
 
 .cmd-item-text, .cmd-item-delete {
-float: left;
+  float: left;
 }
 
 .cmd-item-text {
-width: 90%;
+  width: 90%;
 }
 
 .cmd-item .cmd-item-delete {
@@ -148,6 +149,24 @@ width: 90%;
 }
 
 .cmd-icons .fa-file-code:hover {
+  color: #0069d9;
+}
+
+.cmd-result .bt-copy {
+  position: absolute;
+  top: 9px;
+  right: 15px;
+  color: #007bff;
+  display: none;
+}
+
+.cmd-result:hover .bt-copy {
+  display: block;
+  color: #007bff;
+}
+
+.cmd-result .bt-copy:hover {
+  cursor: pointer;
   color: #0069d9;
 }
 

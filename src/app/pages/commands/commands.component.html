@@ -107,7 +107,12 @@
     <button type="button" class="btn btn-primary" *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length" (click)="generateCmd()">
       Generate
     </button>
-    <pre *ngIf="generatedCommand" class="cmd-result border rounded">{{ generatedCommand }}</pre>
+    <div *ngIf="generatedCommand" class="cmd-result-area">
+      <pre class="cmd-result border rounded">
+        <i class="fas fa-copy bt-copy" (click)="copyToClipboard()"></i>
+        {{ generatedCommand }}
+      </pre>
+    </div>
   </div>
 </div>
 

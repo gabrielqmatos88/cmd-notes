@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ICommand, IParameter } from 'src/app/icommand';
+import { ClipboardService } from 'ngx-clipboard';
+
 
 @Component({
   selector: 'app-commands',
@@ -37,7 +39,7 @@ export class CommandsComponent implements OnInit {
 
   @ViewChild('saveAlert')
   saveAlert: any;
-  constructor() {}
+  constructor(private clipBoardService: ClipboardService) {}
   generatedCommand =  '';
   commandName = '';
   commandStr = '';
@@ -104,6 +106,14 @@ export class CommandsComponent implements OnInit {
   updateCommandStr(e) {
     this.selectedCommand.cmdStr = e.target.value;
     this.autoGrowTextZone(e);
+  }
+
+  copyToClipboard() {
+    if (this.clipBoardService.copyFromContent(this.generatedCommand)) {
+      this.saveAlert.show('Copiado com sucesso', 'alert-success');
+    } else {
+      this.saveAlert.show('Falha ao copiar', 'alert-danger');
+    }
   }
 
   doPreview() {

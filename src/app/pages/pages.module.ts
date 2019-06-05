@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ClipboardModule } from 'ngx-clipboard';
 
 // importing modules
 import { SharedModule } from './../shared/shared.module';
@@ -12,6 +13,7 @@ import { WikiComponent } from './wiki/wiki.component';
 @NgModule({
   imports: [
     CommonModule,
+    ClipboardModule,
     FormsModule,
     SharedModule
   ],
