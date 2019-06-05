@@ -74,6 +74,12 @@ export class CommandsComponent implements OnInit {
       this.generateCmd();
     }
   }
+
+  startEdit() {
+    this.preview = false;
+    this.commandName = this.selectedCommand.name;
+    this.commandStr = this.selectedCommand.cmdStr;
+  }
   private splitCamelCaseWithAbbreviations(s){
     return s.split(/([A-Z][a-z]+)/).filter(function(e){return e}).join(' ');
   }
