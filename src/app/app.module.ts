@@ -6,16 +6,12 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HarService } from './har.service';
-import { HelpToolsComponent } from './help-tools/help-tools.component';
-import { MD5cONVERTERComponent } from './help-tools/components/md5-converter/md5-converter.component';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HelpToolsComponent,
-    MD5cONVERTERComponent
   ],
   imports: [
     BrowserModule,

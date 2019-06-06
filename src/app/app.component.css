@@ -132,6 +132,7 @@ pre.cmd-result {
 .main-content {
   border-left: 1px solid #dee2e6;
   padding-left: 40px;
+  padding-top: 15px;
 }
 
 .list-group {

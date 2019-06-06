@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ICommand, IParameter } from 'src/app/icommand';
 import { ClipboardService } from 'ngx-clipboard';
@@ -51,13 +51,13 @@ export class CommandsComponent implements OnInit {
     if (!!command && command === this.selectedCommand) {
       return;
     }
-    this.form.resetForm();
     this.preview = true;
     this.submitted = false;
     this.generatedCommand = '';
     if (!command) {
       this.commandName = '';
       this.commandStr = '';
+      this.form.resetForm();
       this.preview = false;
       this.selectedCommand = {
         name: this.commandName,
@@ -96,7 +96,7 @@ export class CommandsComponent implements OnInit {
       if (!parsedParameters.find( p => p.name === paramName)) {
         parsedParameters.push({
           name: paramName,
-          label: this.splitCamelCaseWithAbbreviations(paramName || ''),
+          label: (paramName || ''),
           value: defaultValue || '',
           defaultValue: defaultValue
         });
@@ -141,10 +141,14 @@ export class CommandsComponent implements OnInit {
     return cmd;
   }
 
+  private fitTextArea(el) {
+    el.style.overflow = 'hidden';
+    el.style.height = '0px';
+    el.style.height = el.scrollHeight + 'px';
+  }
+
   autoGrowTextZone(e) {
-    e.target.style.overflow = 'hidden';
-    e.target.style.height = '0px';
-    e.target.style.height = e.target.scrollHeight + 'px';
+    this.fitTextArea(e.target);
   }
 
   save() {
