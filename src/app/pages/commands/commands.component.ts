@@ -170,13 +170,16 @@ export class CommandsComponent implements OnInit {
       this.saveAlert.show('Preencha os dados', 'alert-danger');
     }
   }
-  excluir() {
-    if (!!this.selectedCommand) {
-      if (!this.selectedCommand.isNew) {
-        this.commandList = this.commandList.filter( c => c !== this.selectedCommand);
+  excluir(cmd?: ICommand) {
+    const commandToDelete = cmd || this.selectedCommand;
+    if (!!commandToDelete) {
+      if (!commandToDelete.isNew) {
+        this.commandList = this.commandList.filter( c => c !== commandToDelete);
         localStorage.setItem('cmdlist', JSON.stringify(this.commandList));
       }
-      this.selectedCommand = null;
+      if (!cmd) {
+        this.selectedCommand = null;
+      }
     }
   }
   ngOnInit() {
