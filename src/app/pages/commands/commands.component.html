@@ -120,12 +120,22 @@
         </div>
       </div>
     </ng-container>
-    <button type="button" class="btn btn-primary" *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length" (click)="generateCmd()">
-      Generate
-    </button>
+
+    <div class="row">
+      <div class="col-md-6">
+          <button type="button" class="btn btn-primary" *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length" (click)="generateCmd()">
+            Generate
+          </button>
+      </div>
+      <div class="col-md-6 text-right">
+        <button type="button" class="btn btn-outline-primary btn-sm" *ngIf="!!generatedCommand" (click)="copyToClipboard()">
+          <i class="fas fa-copy bt-copy" ></i>
+          Copy
+        </button>
+      </div>
+    </div>
     <div *ngIf="generatedCommand" class="cmd-result-area">
       <pre class="cmd-result border rounded">
-        <i class="fas fa-copy bt-copy" (click)="copyToClipboard()"></i>
         {{ generatedCommand }}
       </pre>
     </div>

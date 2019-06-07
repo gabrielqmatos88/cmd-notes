@@ -1,7 +1,24 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { NgForm, Validators, FormControl, ValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
 import { ICommand, IParameter } from 'src/app/icommand';
 import { ClipboardService } from 'ngx-clipboard';
+
+
+
+function validateNotOnlySpaces(c: FormControl) {
+  const onlySpaces = /^\s+$/;
+  return !onlySpaces.test(c.value) ? null : {
+    onlySpaces: {
+      valid: false
+    }
+  };
+}
+
+export const identityRevealedValidator: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  const name = control.get('name');
+  const alterEgo = control.get('alterEgo');
+  return name && alterEgo && name.value === alterEgo.value ? { 'identityRevealed': true } : null;
+};
 
 
 @Component({
@@ -10,7 +27,7 @@ import { ClipboardService } from 'ngx-clipboard';
   styleUrls: ['commands.component.css']
 })
 
-export class CommandsComponent implements OnInit {
+export class CommandsComponent implements OnInit, AfterViewInit {
   @ViewChild('form', { read: NgForm })
   form: NgForm;
   term = '';
@@ -187,5 +204,8 @@ export class CommandsComponent implements OnInit {
     if (!!loaded) {
       this.commandList = JSON.parse(loaded);
     }
+  }
+  ngAfterViewInit() {
+    // this.form.form.get('cmdName').setValidators([Validators.required, validateNotOnlySpaces]);
   }
 }

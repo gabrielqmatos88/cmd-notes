@@ -1,3 +1,4 @@
+import { PagePasswordComponent } from './pages/password/page-password.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Route } from '@angular/router';
@@ -17,6 +18,10 @@ const routes: Route[] = [
   {
     path: 'wiki',
     component: WikiComponent
+  },
+  {
+    path: 'password',
+    component: PagePasswordComponent
   }
 ];
 

@@ -1,4 +1,3 @@
-import { HelpToolsComponent } from './../help-tools/help-tools.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +7,8 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { SharedModule } from './../shared/shared.module';
 
 // importing components
+import { PagePasswordComponent } from './password/page-password.component';
+import { HelpToolsComponent } from './../help-tools/help-tools.component';
 import { CommandsComponent } from './commands/commands.component';
 import { WikiComponent } from './wiki/wiki.component';
 import { MD5cONVERTERComponent } from '../help-tools/components/md5-converter/md5-converter.component';
@@ -20,10 +21,13 @@ import { MD5cONVERTERComponent } from '../help-tools/components/md5-converter/md
     SharedModule
   ],
   exports: [
+    PagePasswordComponent,
     CommandsComponent,
+    PagePasswordComponent,
     WikiComponent
   ],
   declarations: [
+    PagePasswordComponent,
     CommandsComponent,
     MD5cONVERTERComponent,
     HelpToolsComponent,
