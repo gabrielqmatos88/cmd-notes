@@ -73,14 +73,16 @@
       </div>
     </div>
     <div class="row cmd-title" [hidden]="!selectedCommand" >
-      <div class="col-xs-12 col-md-11">
+      <div class="col-xs-12 col-md-10">
         <h3 class="cmd-name" >
           {{ commandName || 'Novo comando' }}
         </h3>
       </div>
-      <div class="col-md-1">
-        <span class="pull-right fas fa-times" (click)="selectedCommand = null; term = ''">
-        </span>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-link btn-sm"(click)="selectedCommand = null; term = ''">
+          <i class="fas fa-backspace bt-copy"></i>
+          Voltar
+        </button>
       </div>
     </div>
     <toaster #saveAlert></toaster>
@@ -135,8 +137,7 @@
       </div>
     </div>
     <div *ngIf="generatedCommand" class="cmd-result-area">
-      <pre class="cmd-result border rounded">
-        {{ generatedCommand }}
+      <pre class="cmd-result border rounded">{{ generatedCommand }}
       </pre>
     </div>
   </div>

@@ -55,11 +55,11 @@ background: #dee2e6;
 cursor: pointer;
 }
 
-p.cmd-result {
-padding: 15px;
-background: #f6f6f6;
-margin-top: 15px;
-}
+/* p.cmd-result {
+  padding: 15px;
+  background: #f6f6f6;
+  margin-top: 15px;
+} */
 /*  */
 .cmd-tabs {
 margin-bottom: 25px;
@@ -103,7 +103,6 @@ pre.cmd-result {
   padding: 15px;
   outline: 0;
   border: 0;
-  position: relative;
 }
 
 .cmd-item-text, .cmd-item-delete {
@@ -152,21 +151,8 @@ pre.cmd-result {
   color: #0069d9;
 }
 
-.cmd-result .bt-copy {
-  position: absolute;
-  top: 9px;
-  right: 15px;
-  color: #007bff;
-  display: none;
-}
-
-.cmd-result:hover .bt-copy {
-  display: block;
-  color: #007bff;
-}
-
-.cmd-result .bt-copy:hover {
-  cursor: pointer;
-  color: #0069d9;
+hr {
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
