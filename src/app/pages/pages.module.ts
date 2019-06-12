@@ -18,7 +18,7 @@ import { MD5cONVERTERComponent } from '../help-tools/components/md5-converter/md
     CommonModule,
     ClipboardModule,
     FormsModule,
-    SharedModule
+    SharedModule.forChild()
   ],
   exports: [
     PagePasswordComponent,
