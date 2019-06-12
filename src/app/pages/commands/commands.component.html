@@ -16,17 +16,20 @@
     </div>
   </div>
   <div class="col-md-6">
-    <div class="form-group">
-        <div class="btn-group text-right">
-          <button class="btn btn-slack" (click)="setCmd()">
+    <div class="form-group text-right">
+        <div class="btn-group">
+          <button class="btn btn-primary btn-hover-span" (click)="setCmd()">
             <!-- Novo -->
             <i class="fas fa-file-code"></i>
+            <span>Novo</span>
           </button>
-          <button class="btn btn-slack" data-toggle="modal" data-target="#commandModal" (click)="setAction('import')">
+          <button class="btn btn-primary btn-hover-span" data-toggle="modal" data-target="#commandModal" (click)="setAction('import')">
             <i class="fas fa-file-download"  title="Import"></i>
+            <span>Import</span>
           </button>
-            <button class="btn btn-slack" data-toggle="modal" data-target="#commandModal" (click)="setAction('export')">
+            <button class="btn btn-primary btn-hover-span" (click)="exportCommandList()">
               <i class="fas fa-file-upload"></i>
+              <span>Export</span>
             </button>
         </div>
     </div>
@@ -48,14 +51,6 @@
 </div>
 <div class="row" >
   <div class="col-sm-12">
-    <!-- <ul class="nav nav-tabs cmd-tabs" *ngIf="!!selectedCommand">
-      <li class="nav-item">
-        <a class="nav-link" [ngClass]="{ 'active': preview }" (click)="doPreview()">Preview</a>
-      </li>
-      <li class="nav-item" >
-        <a class="nav-link" [ngClass]="{ 'active': !preview }" (click)="startEdit()">Edit</a>
-      </li>
-    </ul> -->
     <div class="row">
       <div class="col-sm-12 col-md-6">
         <ul class="nav nav-pills nav-fill flex-column flex-sm-row mb-md-4" role="tablist" *ngIf="!!selectedCommand">
@@ -73,15 +68,19 @@
       </div>
     </div>
     <div class="row cmd-title" [hidden]="!selectedCommand" >
-      <div class="col-xs-12 col-md-10">
+      <div class="col-12 col-md-8">
         <h3 class="cmd-name" >
           {{ commandName || 'Novo comando' }}
         </h3>
       </div>
-      <div class="col-md-2">
-        <button type="button" class="btn btn-link btn-sm"(click)="selectedCommand = null; term = ''">
+      <div class="col-12 col-md-4 text-right">
+          <button type="button" class="btn btn-link btn-sm btn-hover-span ml-0 mr-0" (click)="exportSingleCmd()">
+            <i class="fas fa-upload bt-copy"></i>
+            <span>Export</span>
+          </button>
+        <button type="button" class="btn btn-link btn-sm btn-hover-span ml-0 mr-0" (click)="selectedCommand = null; term = ''">
           <i class="fas fa-backspace bt-copy"></i>
-          Voltar
+          <span>Voltar</span>
         </button>
       </div>
     </div>
@@ -149,7 +148,6 @@
         <div class="modal-header">
           <h5 class="modal-title" id="commandModalLabel">
             <span *ngIf="action === 'import'">Import</span>
-            <span *ngIf="action === 'export'">Export</span>
           </h5>
           <button type="button" class="close" data-dismiss="modal" #btnCloseModal aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -160,12 +158,12 @@
             <div class="col-12" *ngIf="action === 'import'">
               <app-file-selector id="fileImporter" #fileImporter (importSuccess)="importSuccess()"></app-file-selector>
             </div>
-            <div class="offset-2 col-8" *ngIf="action === 'export'">
+            <!-- <div class="offset-2 col-8" *ngIf="action === 'export'">
               <button class="btn btn-block btn-success">
                 <i class="fas fa-file-upload mr-1"></i>
                 Export commands
               </button>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
