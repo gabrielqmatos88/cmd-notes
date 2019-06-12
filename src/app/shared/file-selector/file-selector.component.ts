@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, ViewChild, NgZone } from '@angular/core';
+import { isArray } from 'util';
+import { ICommand } from 'src/app/icommand';
 
 export const FILE_ERRORS = {
   INVALID_FORMAT: 'invalidFormat',
@@ -8,7 +10,8 @@ export const FILE_ERRORS = {
 
 @Component({
   selector: 'app-file-selector',
-  templateUrl: 'file-selector.component.html'
+  templateUrl: 'file-selector.component.html',
+  styleUrls: ['file-selector.component.css']
 })
 export class FileSelectorComponent implements OnInit {
   @Input()
@@ -17,10 +20,36 @@ export class FileSelectorComponent implements OnInit {
   errorReason: string;
   @ViewChild('fileSelector')
   fileSelector: any;
-
+  parsed: ICommand[];
   private file: any;
   constructor(private zone: NgZone) { }
   ngOnInit() { }
+
+  validateCommand(data: ICommand): boolean {
+    return !!data && !!data.name && !!data.cmdStr;
+  }
+  analyzeContent(data: any) {
+    if (!data || !data.type || !/^(full_list|single)$/i.test(data.type) || !data.content) {
+      this.errorReason = FILE_ERRORS.INVALID_FORMAT;
+      return;
+    }
+    if (/^single$/i.test(data.type)) {
+      if (!this.validateCommand(data.content)) {
+        this.errorReason = FILE_ERRORS.INVALID_FORMAT;
+        return;
+      }
+      this.parsed = [data.content];
+    }
+    if (/^full_list$/i.test(data.type) && isArray(data.content)) {
+      let commands: any[] = data.content;
+      commands = commands.filter(this.validateCommand);
+      if (!commands || !commands.length) {
+        this.errorReason = FILE_ERRORS.INVALID_FORMAT;
+        return;
+      }
+      this.parsed = commands;
+    }
+  }
 
   readDocument() {
     const fileReader = new FileReader();
@@ -29,10 +58,7 @@ export class FileSelectorComponent implements OnInit {
         try {
           this.filePath = this.file.name;
           const data = JSON.parse((fileReader.result || '').toString());
-          console.log(data);
-          if (!data || !data.importType || /!(fullist|single)/i.test(data.importType)) {
-            this.errorReason = FILE_ERRORS.INVALID_FORMAT;
-          }
+          this.analyzeContent(data);
         } catch (e) {
           this.filePath = '';
           this.file = null;
@@ -63,6 +89,7 @@ export class FileSelectorComponent implements OnInit {
   selectFile() {
     this.fileSelector.nativeElement.click();
     this.filePath = '';
+    this.parsed = null;
     this.file = null;
     this.errorReason = '';
   }

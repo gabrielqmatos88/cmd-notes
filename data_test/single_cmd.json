@@ -1,0 +1,4 @@
+{
+    "type": "single",
+    "content": {"name":"XMO set","cmdStr":"xmo-client -p \"${xpath}\" -s \"${value}\"","tag":"xmo","parameters":[{"name":"xpath","label":"xpath","value":""},{"name":"value","label":"value","value":""}]}
+}
