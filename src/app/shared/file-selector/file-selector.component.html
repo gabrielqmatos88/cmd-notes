@@ -1,16 +1,29 @@
 <div class="form-row">
-  <div class="col-8">
-    <input type="text" class="form-control form-control-sm" name="{{id}}" id="{{id}}" [ngClass]="{ 'is-invalid' : !!errorReason }" readonly [(ngModel)]="filePath" aria-label="Recipient's username" >
-  </div>
-  <div class="col-4">
-      <button class="btn btn-sm {{ !!errorReason ? 'btn-danger': 'btn-outline-primary'}}"  (click)="selectFile()">
-        <i class="fas fa-file-upload"></i>&nbsp;&nbsp;
-        Choose a file
+  <div class="col-8 offset-2">
+      <button class="btn btn-block btn-sm"
+      [ngClass]="{ 'btn-danger': !!errorReason, 'btn-success': !!parsed && parsed.length, 'btn-outline-primary':!parsed && !errorReason }"
+      (click)="selectFile()">
+        <span class="d-block"><i class="fas fa-file-upload"></i></span>
+        <span class="d-block">{{ filePath ? filePath : 'Choose a file' }}</span>
       </button>
   </div>
+  <div class="col-12 mt-3" *ngIf='!!parsed && parsed.length'>
+    <div class="text-right">
+      <button class="btn btn-link btn-sm">Add</button>&nbsp;
+      <button class="btn btn-link btn-sm">Replace</button>&nbsp;<strong>{{parsed.length}}</strong>
+    </div>
+    <div *ngFor="let cmd of parsed; let i = index;">
+      <div class="cmd-header">
+        <strong data-toggle="collapse" attr.data-target='{{ "#cmd-item-" + i }}' aria-expanded="false" class="p-2 d-block">{{ cmd.name }}</strong>
+      </div>
+      <div id="{{ 'cmd-item-' + i }}" class="collapse p-2 collapsed mb-1">
+        <span >{{ cmd.cmdStr }}</span>
+      </div>
+    </div>
+  </div>
   <input type='file' class="hidden-file" #fileSelector (change)="fileChanged($event)">
-  <div class="col-md-12 pl-2">
-    <div class="d-block invalid-feedback" *ngIf='errorReason === "badFile"'>
+  <div class="col-md-12 p-3 text-center">
+    <div class="d-block invalid-feedback" *ngIf="errorReason === 'badFile'">
       <span>Formato inválido, selecione um arquivo do tipo JSON (*.json)</span>
     </div>
     <div class="d-block invalid-feedback" *ngIf='errorReason === "parseError"'>
@@ -20,15 +33,4 @@
       <span>O arquivo selecionado não possui dados válidos para importação</span>
     </div>
   </div>
-    <!-- <div class="form-group mb-3">
-      <input type="text" class="form-control" name="{{id}}" id="{{id}}" [ngClass]="{ 'is-invalid' : !!errorReason }" readonly [(ngModel)]="filePath" aria-label="Recipient's username" >
-      <button class="btn btn-primary ml-2" (click)="selectFile()">
-        <i class="fas fa-file-upload"></i>&nbsp;&nbsp;
-        Choose a file
-      </button>
-      <input type='file' class="hidden-file" #fileSelector (change)="fileChanged($event)">
-      <div class="invalid-feedback">
-        <span> ta errado</span>
-      </div>
-    </div> -->
 </div>
