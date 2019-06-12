@@ -3,6 +3,7 @@ import { NgForm, Validators, FormControl, ValidatorFn, FormGroup, ValidationErro
 import { ICommand, IParameter } from 'src/app/icommand';
 import { ClipboardService } from 'ngx-clipboard';
 import { CommandsService } from './../../shared/services/commands.service';
+import { downloadFile } from 'src/app/utils';
 
 
 
@@ -219,6 +220,29 @@ export class CommandsComponent implements OnInit, AfterViewInit {
   importSuccess(): void {
     this.closeModal();
     this.commandList = this.commandService.getCommands(true);
+  }
+  exportCommandList(): void {
+    const cleanCmdList = this.commandList.map( c => ({ cmdStr: c.cmdStr, name: c.name, tag: c.tag }));
+    const dataToExport = {
+      type: 'full_list',
+      content: cleanCmdList
+    };
+    downloadFile(JSON.stringify(dataToExport), 'cmd-notes.json');
+  }
+
+  exportSingleCmd(): void {
+    const cmdToExport: ICommand = {
+      name: this.selectedCommand.name,
+      cmdStr: this.selectedCommand.cmdStr,
+      tag: this.selectedCommand.tag
+    };
+    const dataToExport = {
+      type: 'single',
+      content: cmdToExport
+    };
+    let filename = this.selectedCommand.name;
+    filename = filename.toLowerCase().trim().replace(/\s+/ig, '-') + '.json';
+    downloadFile(JSON.stringify(dataToExport), filename);
   }
   ngAfterViewInit() {
     // this.form.form.get('cmdName').setValidators([Validators.required, validateNotOnlySpaces]);
