@@ -1,0 +1,34 @@
+<div class="form-row">
+  <div class="col-8">
+    <input type="text" class="form-control form-control-sm" name="{{id}}" id="{{id}}" [ngClass]="{ 'is-invalid' : !!errorReason }" readonly [(ngModel)]="filePath" aria-label="Recipient's username" >
+  </div>
+  <div class="col-4">
+      <button class="btn btn-sm {{ !!errorReason ? 'btn-danger': 'btn-outline-primary'}}"  (click)="selectFile()">
+        <i class="fas fa-file-upload"></i>&nbsp;&nbsp;
+        Choose a file
+      </button>
+  </div>
+  <input type='file' class="hidden-file" #fileSelector (change)="fileChanged($event)">
+  <div class="col-md-12 pl-2">
+    <div class="d-block invalid-feedback" *ngIf='errorReason === "badFile"'>
+      <span>Formato inválido, selecione um arquivo do tipo JSON (*.json)</span>
+    </div>
+    <div class="d-block invalid-feedback" *ngIf='errorReason === "parseError"'>
+      <span>o conteúdo do arquivo não é do formato JSON</span>
+    </div>
+    <div class="d-block invalid-feedback" *ngIf='errorReason === "invalidFormat"'>
+      <span>O arquivo selecionado não possui dados válidos para importação</span>
+    </div>
+  </div>
+    <!-- <div class="form-group mb-3">
+      <input type="text" class="form-control" name="{{id}}" id="{{id}}" [ngClass]="{ 'is-invalid' : !!errorReason }" readonly [(ngModel)]="filePath" aria-label="Recipient's username" >
+      <button class="btn btn-primary ml-2" (click)="selectFile()">
+        <i class="fas fa-file-upload"></i>&nbsp;&nbsp;
+        Choose a file
+      </button>
+      <input type='file' class="hidden-file" #fileSelector (change)="fileChanged($event)">
+      <div class="invalid-feedback">
+        <span> ta errado</span>
+      </div>
+    </div> -->
+</div>
