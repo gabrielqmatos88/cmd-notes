@@ -12,22 +12,22 @@
 <div class="row" *ngIf="!selectedCommand">
   <div class="col-md-6">
     <div class="form-group">
-      <input class="form-control" type="text" name="term" [(ngModel)]="term">
+      <input class="form-control form-control-sm" type="text" name="term" [(ngModel)]="term">
     </div>
   </div>
   <div class="col-md-6">
     <div class="form-group text-right">
         <div class="btn-group">
-          <button class="btn btn-primary btn-hover-span" (click)="setCmd()">
+          <button class="btn btn-sm btn-primary btn-hover-span" (click)="setCmd()">
             <!-- Novo -->
             <i class="fas fa-file-code"></i>
             <span>Novo</span>
           </button>
-          <button class="btn btn-primary btn-hover-span" data-toggle="modal" data-target="#commandModal" (click)="setAction('import')">
+          <button class="btn btn-sm btn-primary btn-hover-span" data-toggle="modal" data-target="#commandModal" (click)="setAction('import')">
             <i class="fas fa-file-download"  title="Import"></i>
             <span>Import</span>
           </button>
-            <button class="btn btn-primary btn-hover-span" (click)="exportCommandList()">
+            <button class="btn btn-sm btn-primary btn-hover-span" (click)="exportCommandList()">
               <i class="fas fa-file-upload"></i>
               <span>Export</span>
             </button>
@@ -42,8 +42,15 @@
         <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
           <td>{{ cmd.name }}</td>
           <td class="text-right cmd-icons">
-            <i class="fas fa-file-code" (click)="setCmd(cmd)"> &nbsp;</i>
-            <i class="fas fa-trash" (click)="excluir(cmd)"></i></td>
+            <button class="btn btn-link btn-sm btn-link-primary btn-hover-span m-0" (click)="setCmd(cmd)">
+                <i class="fas fa-file-code"></i>
+                <span>Editar</span>
+            </button>
+            <button class="btn btn-sm btn-link btn-link-danger btn-hover-span m-0" (click)="excluir(cmd)">
+                <i class="fas fa-trash"></i>
+                <span>Excluir</span>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -99,7 +106,6 @@
           Command Expression
           <span class="field-error" *ngIf="!cmd.valid && (cmd.dirty || submitted)">Preencha o comando</span>
         </label>
-        <!-- <input type="text" class="form-control" id="cmd" name="cmd" [(ngModel)]="commandStr" (change)="updateCommandStr($event)" #cmd="ngModel" required /> -->
         <textarea class="form-control rounded-0" id="cmd" name="cmd" [(ngModel)]="commandStr" (mouseenter)="autoGrowTextZone($event)" (keyup)="autoGrowTextZone($event)" (change)="updateCommandStr($event)" #cmd="ngModel" required></textarea>
     </div>
     <button type="button" class="btn btn-primary" (click)="save()">
@@ -158,12 +164,6 @@
             <div class="col-12" *ngIf="action === 'import'">
               <app-file-selector id="fileImporter" #fileImporter (importSuccess)="importSuccess()"></app-file-selector>
             </div>
-            <!-- <div class="offset-2 col-8" *ngIf="action === 'export'">
-              <button class="btn btn-block btn-success">
-                <i class="fas fa-file-upload mr-1"></i>
-                Export commands
-              </button>
-            </div> -->
           </div>
         </div>
       </div>

@@ -79,19 +79,6 @@ h3.cmd-name {
 width: 100%;
 }
 
-.cmd-title .fa-trash {
-display: none;
-}
-.cmd-title:hover .fas.fa-trash {
-display: inherit;
-cursor: pointer;
-color: #f37373;
-}
-
-.cmd-title .fas.fa-trash:hover {
-  color: #d61c1c;
-}
-
 #cmd {
 height: auto;
 resize: none;
@@ -139,13 +126,13 @@ pre.cmd-result {
   cursor: pointer;
 }
 
-.cmd-icons .fa-trash {
+/* .cmd-icons .fa-trash {
   color: #d61c1c;
 }
 
 .cmd-icons .fa-trash:hover {
   color: #7e0f0f;
-}
+} */
 
 .cmd-icons .fa-file-code:hover {
   color: #0069d9;
@@ -162,5 +149,19 @@ hr {
 }
 .btn.btn-hover-span:hover > span {
   display: inline-block;
+}
+
+.btn.btn-link-danger {
+  color: #d61c1c;
+}
+
+.btn.btn-link-danger:hover {
+  background-color: #d61c1c;
+  color: #fff;
+}
+
+.btn.btn-link-primary:hover {
+  background-color: #5e72e4;
+  color: #fff;
 }
 
