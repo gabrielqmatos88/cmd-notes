@@ -1,11 +1,13 @@
-import { Component, OnInit, Input, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, NgZone, Output, EventEmitter } from '@angular/core';
 import { isArray } from 'util';
 import { ICommand } from 'src/app/icommand';
+import { CommandsService } from '../services/commands.service';
 
 export const FILE_ERRORS = {
   INVALID_FORMAT: 'invalidFormat',
   PARSE_ERROR: 'parseError',
-  BAD_FILE: 'badFile'
+  BAD_FILE: 'badFile',
+  CUSTOM: 'custom'
 };
 
 @Component({
@@ -18,11 +20,15 @@ export class FileSelectorComponent implements OnInit {
   id: string;
   filePath: string;
   errorReason: string;
+  errorCustomMessage: string;
+
+  @Output()
+  importSuccess = new EventEmitter<any>();
   @ViewChild('fileSelector')
   fileSelector: any;
   parsed: ICommand[];
   private file: any;
-  constructor(private zone: NgZone) { }
+  constructor(private zone: NgZone, private cmd: CommandsService) { }
   ngOnInit() { }
 
   validateCommand(data: ICommand): boolean {
@@ -79,19 +85,29 @@ export class FileSelectorComponent implements OnInit {
     }
   }
 
-  fileChanged(e) {
+  fileChanged(e): void {
     if (!!e && e.target && e.target.files && e.target.files[0]) {
       this.file = e.target.files[0];
       this.readDocument();
     }
   }
 
-  selectFile() {
-    this.fileSelector.nativeElement.click();
+  reset(): void {
     this.filePath = '';
     this.parsed = null;
     this.file = null;
     this.errorReason = '';
   }
 
+  selectFile(): void {
+    this.fileSelector.nativeElement.click();
+  }
+  add(replaces?: boolean) {
+    this.cmd.addCommands(this.parsed, replaces).subscribe(() => {
+      this.importSuccess.emit();
+    }, (err) => {
+      this.errorReason = FILE_ERRORS.CUSTOM;
+      this.errorCustomMessage = err;
+    });
+  }
 }

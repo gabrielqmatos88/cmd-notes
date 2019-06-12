@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '
 import { NgForm, Validators, FormControl, ValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
 import { ICommand, IParameter } from 'src/app/icommand';
 import { ClipboardService } from 'ngx-clipboard';
+import { CommandsService } from './../../shared/services/commands.service';
 
 
 
@@ -30,6 +31,10 @@ export const identityRevealedValidator: ValidatorFn = (control: FormGroup): Vali
 export class CommandsComponent implements OnInit, AfterViewInit {
   @ViewChild('form', { read: NgForm })
   form: NgForm;
+  @ViewChild('fileImporter')
+  fileImporter: {reset: () => void };
+  @ViewChild('btnCloseModal')
+  btnCloseModal: any;
   term = '';
   commandList: ICommand[] = [
     {
@@ -56,7 +61,7 @@ export class CommandsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('saveAlert')
   saveAlert: any;
-  constructor(private clipBoardService: ClipboardService) {}
+  constructor(private clipBoardService: ClipboardService, private commandService: CommandsService) {}
   generatedCommand =  '';
   commandName = '';
   commandStr = '';
@@ -200,10 +205,20 @@ export class CommandsComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnInit() {
-    const loaded = localStorage.getItem('cmdlist');
-    if (!!loaded) {
-      this.commandList = JSON.parse(loaded);
+    this.commandList = this.commandService.getCommands(true);
+  }
+  setAction(act: string): void {
+    this.action = act;
+    if (this.action === 'import') {
+      this.fileImporter.reset();
     }
+  }
+  private closeModal(): void {
+    this.btnCloseModal.nativeElement.click();
+  }
+  importSuccess(): void {
+    this.closeModal();
+    this.commandList = this.commandService.getCommands(true);
   }
   ngAfterViewInit() {
     // this.form.form.get('cmdName').setValidators([Validators.required, validateNotOnlySpaces]);

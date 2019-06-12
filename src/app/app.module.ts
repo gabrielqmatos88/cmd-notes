@@ -16,7 +16,7 @@ import { AppRoutingModule } from './app.routing.module';
   imports: [
     BrowserModule,
     RouterModule,
-    SharedModule,
+    SharedModule.forRoot(),
     FormsModule,
     PagesModule,
     AppRoutingModule

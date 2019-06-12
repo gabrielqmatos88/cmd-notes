@@ -3,14 +3,17 @@
       <button class="btn btn-block btn-sm"
       [ngClass]="{ 'btn-danger': !!errorReason, 'btn-success': !!parsed && parsed.length, 'btn-outline-primary':!parsed && !errorReason }"
       (click)="selectFile()">
-        <span class="d-block"><i class="fas fa-file-upload"></i></span>
+        <span class="d-block mt-1"><i class="fas fa-file-download"></i></span>
         <span class="d-block">{{ filePath ? filePath : 'Choose a file' }}</span>
       </button>
   </div>
   <div class="col-12 mt-3" *ngIf='!!parsed && parsed.length'>
     <div class="text-right">
-      <button class="btn btn-link btn-sm">Add</button>&nbsp;
-      <button class="btn btn-link btn-sm">Replace</button>&nbsp;<strong>{{parsed.length}}</strong>
+      <button class="btn btn-link btn-sm" (click)="add()">Add</button>&nbsp;
+      <ng-container *ngIf="parsed.length > 1"><button class="btn btn-link btn-sm" (click)="add(true)" >
+        Replace</button>
+      &nbsp;<strong>{{parsed.length}}</strong>
+      </ng-container>
     </div>
     <div *ngFor="let cmd of parsed; let i = index;">
       <div class="cmd-header">
@@ -22,7 +25,10 @@
     </div>
   </div>
   <input type='file' class="hidden-file" #fileSelector (change)="fileChanged($event)">
-  <div class="col-md-12 p-3 text-center">
+  <div class="col-md-12 p-3 text-center" *ngIf="!!errorReason">
+    <div class="d-block invalid-feedback" *ngIf="errorReason === 'custom'">
+      <span>{{ errorCustomMessage }}</span>
+    </div>
     <div class="d-block invalid-feedback" *ngIf="errorReason === 'badFile'">
       <span>Formato inválido, selecione um arquivo do tipo JSON (*.json)</span>
     </div>

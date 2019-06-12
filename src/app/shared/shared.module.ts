@@ -5,6 +5,8 @@ import { FileSelectorComponent } from './file-selector/file-selector.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { ToasterComponent } from './toaster/toaster.component';
 import { InsensitiveSearch } from './insensitive-search/insensitive-search.pipe';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { CommandsService } from './services/commands.service';
 
 @NgModule({
   imports: [
@@ -26,7 +28,18 @@ import { InsensitiveSearch } from './insensitive-search/insensitive-search.pipe'
     FileSelectorComponent,
     // pipes
     InsensitiveSearch
-  ],
-  providers: []
+  ]
 })
-export class SharedModule { }
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [CommandsService]
+    };
+  }
+  static forChild() {
+    return {
+      ngModule: SharedModule
+    };
+  }
+}
