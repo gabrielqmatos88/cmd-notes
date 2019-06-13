@@ -37,28 +37,7 @@ export class CommandsComponent implements OnInit, AfterViewInit {
   @ViewChild('btnCloseModal')
   btnCloseModal: any;
   term = '';
-  commandList: ICommand[] = [
-    {
-      name: 'XMO get',
-      cmdStr: 'xmo-client -p "${xpath}"',
-      tag: 'xmo'
-    },
-    {
-      name: 'XMO set',
-      cmdStr: 'xmo-client -p "${xpath}" -s "${value}"',
-      tag: 'xmo'
-    },
-    {
-      name: 'XMO Senha (uid)',
-      cmdStr: 'xmo-client -p "Device/UserAccounts/Users/User[@uid=${Uid}]" -s "${Senha}"',
-      tag: 'xmo'
-    },
-    {
-      name: 'XMO Senha (login)',
-      cmdStr: 'xmo-client -p "Device/UserAccounts/Users/User[Login=\'${Login}\']" -s "${Senha}"',
-      tag: 'xmo'
-    }
-  ];
+  commandList: ICommand[] = [];
 
   @ViewChild('saveAlert')
   saveAlert: any;
@@ -208,11 +187,8 @@ export class CommandsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.commandList = this.commandService.getCommands(true);
   }
-  setAction(act: string): void {
-    this.action = act;
-    if (this.action === 'import') {
-      this.fileImporter.reset();
-    }
+  resetImport(): void {
+    this.fileImporter.reset();
   }
   private closeModal(): void {
     this.btnCloseModal.nativeElement.click();

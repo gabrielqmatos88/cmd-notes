@@ -23,7 +23,7 @@
             <i class="fas fa-file-code"></i>
             <span>Novo</span>
           </button>
-          <button class="btn btn-sm btn-primary btn-hover-span" data-toggle="modal" data-target="#commandModal" (click)="setAction('import')">
+          <button class="btn btn-sm btn-primary btn-hover-span" data-toggle="modal" data-target="#commandModal" (click)="resetImport()">
             <i class="fas fa-file-download"  title="Import"></i>
             <span>Import</span>
           </button>
@@ -32,6 +32,11 @@
               <span>Export</span>
             </button>
         </div>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="!commandList || !commandList.length">
+    <div class="alert alert-dark">
+      There's no commands here, please <a class="btn-link" href="javascript:void(0)" data-toggle="modal" data-target="#commandModal" (click)="resetImport()" >import</a> some or create a <a href="javascript:void(0)" (click)="setCmd()">new one</a>
     </div>
   </div>
 </div>
@@ -153,7 +158,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="commandModalLabel">
-            <span *ngIf="action === 'import'">Import</span>
+            <span >Import</span>
           </h5>
           <button type="button" class="close" data-dismiss="modal" #btnCloseModal aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -161,7 +166,7 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-12" *ngIf="action === 'import'">
+            <div class="col-12">
               <app-file-selector id="fileImporter" #fileImporter (importSuccess)="importSuccess()"></app-file-selector>
             </div>
           </div>
