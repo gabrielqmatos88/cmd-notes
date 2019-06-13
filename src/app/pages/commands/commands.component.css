@@ -164,4 +164,8 @@ hr {
   background-color: #5e72e4;
   color: #fff;
 }
+strong.as-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
