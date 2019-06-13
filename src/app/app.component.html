@@ -4,14 +4,14 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="btn-group" role="group" aria-label="Theme selector">
-          <button type="button" class="btn btn-sm btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'light' }" (click)="changeTheme('light')">
-            <i class="fas fa-sun mr-2"></i>
-            <span>Light</span>
+        <div class="btn-group btn-group-sm btn-group-hover-span" role="group" aria-label="Theme selector">
+          <button type="button" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'light' }" (click)="changeTheme('light')">
+            <i class="fas fa-sun"></i>
+            <span class="ml-2">Light</span>
           </button>
-          <button type="button" class="btn btn-sm btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'dark' }" (click)="changeTheme('dark')">
-            <i class="fas fa-moon mr-2"></i>
-            <span>Dark</span>
+          <button type="button" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'dark' }" (click)="changeTheme('dark')">
+            <i class="fas fa-moon"></i>
+            <span class="ml-2">Dark</span>
           </button>
         </div>
     </div>
@@ -21,11 +21,11 @@
 		<div class="col-md-8 offset-md-2" >
       <div class="row">
         <div class="col-xs-12 col-md-4">
-            <div class="list-group">
-              <a [routerLink]="['/commands']" routerLinkActive="active" class="list-group-item"><i class="fa fa-terminal"></i> <span>Commands</span></a>
-              <a [routerLink]="['/wiki']" routerLinkActive="active" class="list-group-item"><i class="fas fa-book"></i> <span>Wiki</span></a>
-              <a [routerLink]="['/password']" routerLinkActive="active" class="list-group-item"><i class="fas fa-key"></i> <span>Passwords</span></a>
-            </div>
+            <ul class="list-group route-menu">
+              <li [routerLink]="['/commands']" routerLinkActive="active" class="list-group-item"><i class="fa fa-terminal"></i> <span>Commands</span></li>
+              <li [routerLink]="['/wiki']" routerLinkActive="active" class="list-group-item"><i class="fas fa-book"></i> <span>Wiki</span> </li>
+              <li [routerLink]="['/password']" routerLinkActive="active" class="list-group-item"><i class="fas fa-key"></i> <span>Passwords</span></li>
+            </ul>
         </div>
         <div class="col-xs-12 col-md-8 main-content">
           <router-outlet></router-outlet>

@@ -143,14 +143,6 @@ hr {
   margin-bottom: 20px;
 }
 
-.btn.btn-hover-span > span {
-  display: none;
-  font-size: 0.8em;
-}
-.btn.btn-hover-span:hover > span {
-  display: inline-block;
-}
-
 .btn.btn-link-danger {
   color: #d61c1c;
 }

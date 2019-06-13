@@ -69,6 +69,18 @@ table#parsed-data td.xpath-value {
   width: 45%;
 }
 
+.list-group.route-menu > li {
+  cursor: pointer;
+}
+
+.btn.btn-hover-span > span, .btn-group-hover-span .btn > span {
+  display: none;
+  font-size: 0.8em;
+}
+.btn.btn-hover-span:hover > span, .btn-group-hover-span .btn:hover > span {
+  display: inline-block;
+}
+
 /* Dark theme */
 
 .theme-dark .btn-theme-active {
