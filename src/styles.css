@@ -81,6 +81,10 @@ table#parsed-data td.xpath-value {
   cursor: pointer;
 }
 
+.list-group.route-menu .list-group-item {
+  cursor: pointer;
+}
+
 /* Dark theme */
 .theme-dark .btn-theme-active {
   color: #fff;
@@ -97,7 +101,6 @@ table#parsed-data td.xpath-value {
   color: #fff;
   background-color: #444;
   border-color: #444;
-  cursor: pointer;
   outline: none;
 }
 
