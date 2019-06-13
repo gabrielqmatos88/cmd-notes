@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-
+body {
+  display: none;
+}
+body.themed {
+  display: block;
+}
 .logo {
   float: left;
   background-image: url(/assets/cmd.png);
@@ -62,5 +67,15 @@ table#parsed-data td.action {
 table#parsed-data td.xpath-value {
   word-break: break-word;
   width: 45%;
+}
+
+.theme-dark .btn-theme-active {
+  color: #fff;
+  background-color: #2b2b2b;
+  border-color: #2b2b2b;
+}
+
+.theme-light .btn-theme-active {
+  background-color: #707b7b;
 }
 

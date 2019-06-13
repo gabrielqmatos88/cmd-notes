@@ -8,6 +8,10 @@ if (environment.production) {
   enableProdMode();
 }
 
+const theme = localStorage.getItem('theme');
+if (!theme) {
+  localStorage.setItem('theme', 'light');
+}
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
 

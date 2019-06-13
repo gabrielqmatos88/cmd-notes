@@ -1,6 +1,7 @@
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit, Renderer2, Inject } from '@angular/core';
 import { ICommand, IParameter } from './icommand';
 import { NgForm } from '@angular/forms';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -10,38 +11,28 @@ import { NgForm } from '@angular/forms';
 export class AppComponent implements AfterViewInit, OnInit {
   @ViewChild('form', { read: NgForm })
   form: NgForm;
-  commandList: ICommand[] = [
-    {
-      name: 'XMO get',
-      cmdStr: 'xmo-client -p "${xpath}"',
-      tag: 'xmo'
-    },
-    {
-      name: 'XMO set',
-      cmdStr: 'xmo-client -p "${xpath}" -s "${value}"',
-      tag: 'xmo'
-    },
-    {
-      name: 'XMO Senha (uid)',
-      cmdStr: 'xmo-client -p "Device/UserAccounts/Users/User[@uid=${Uid}]" -s "${Senha}"',
-      tag: 'xmo'
-    },
-    {
-      name: 'XMO Senha (login)',
-      cmdStr: 'xmo-client -p "Device/UserAccounts/Users/User[Login=\'${Login}\']" -s "${Senha}"',
-      tag: 'xmo'
-    }
-  ];
+  commandList: ICommand[] = [];
 
   @ViewChild('saveAlert')
   saveAlert: any;
-  constructor() {}
   generatedCommand =  '';
   commandName = '';
   commandStr = '';
   selectedCommand: ICommand;
   submitted = false;
   preview = false;
+
+
+  currentTheme = localStorage.getItem('theme');
+  constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document) {}
+
+  changeTheme(type) {
+    this.renderer.removeClass(document.body, 'theme-' + this.currentTheme);
+    this.currentTheme = type;
+    this.renderer.addClass(document.body, 'theme-' + this.currentTheme);
+    this.document.getElementById('theme').href = '/assets/css/bootstrap.' + type + '.css';
+    localStorage.setItem('theme', this.currentTheme);
+  }
   setCmd(command?: ICommand) {
     if (!!command && command === this.selectedCommand) {
       return;
@@ -156,8 +147,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.selectedCommand = null;
     }
   }
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
   ngOnInit() {
     const loaded = localStorage.getItem('cmdlist');
     if (!!loaded) {
