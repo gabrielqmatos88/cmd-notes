@@ -101,6 +101,7 @@ export class FileSelectorComponent implements OnInit {
 
   selectFile(): void {
     this.fileSelector.nativeElement.click();
+    this.reset();
   }
   add(replaces?: boolean) {
     this.cmd.addCommands(this.parsed, replaces).subscribe(() => {

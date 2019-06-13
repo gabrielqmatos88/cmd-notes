@@ -3,6 +3,7 @@ import { ICommand, IParameter } from './icommand';
 import { NgForm } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 
+declare var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -27,10 +28,12 @@ export class AppComponent implements AfterViewInit, OnInit {
   constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document) {}
 
   changeTheme(type) {
+    const baseHref = $('base').attr('href');
+    console.log('baseh')
     this.renderer.removeClass(document.body, 'theme-' + this.currentTheme);
     this.currentTheme = type;
     this.renderer.addClass(document.body, 'theme-' + this.currentTheme);
-    this.document.getElementById('theme').href = '/assets/css/bootstrap.' + type + '.css';
+    $('#theme').attr('href', baseHref + 'assets/css/bootstrap.' + type + '.css');
     localStorage.setItem('theme', this.currentTheme);
   }
   setCmd(command?: ICommand) {

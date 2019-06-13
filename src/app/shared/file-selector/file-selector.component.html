@@ -1,7 +1,7 @@
 <div class="form-row">
   <div class="col-8 offset-2">
       <button class="btn btn-block btn-sm"
-      [ngClass]="{ 'btn-danger': !!errorReason, 'btn-success': !!parsed && parsed.length, 'btn-outline-primary':!parsed && !errorReason }"
+      [ngClass]="{ 'btn-danger': !!errorReason, 'btn-success': !!parsed && parsed.length, 'btn-secondary':!parsed && !errorReason }"
       (click)="selectFile()">
         <span class="d-block mt-1"><i class="fas fa-file-download"></i></span>
         <span class="d-block">{{ filePath ? filePath : 'Choose a file' }}</span>
@@ -9,13 +9,15 @@
   </div>
   <div class="col-12 mt-3" *ngIf='!!parsed && parsed.length'>
     <div class="text-right mb-2">
-      <button class="btn btn-outline-primary btn-sm" (click)="add()">
-        Add
-      </button>
+      <div class="btn-group">
+          <button class="btn btn-secondary btn-sm" (click)="add()">
+            Add
+          </button>
+          <button *ngIf="parsed.length > 1" class="btn btn-sm btn-secondary" (click)="add(true)" >
+            Replace
+          </button>
+      </div>
       <ng-container *ngIf="parsed.length > 1">
-        <button class="btn btn-sm btn-outline-primary" (click)="add(true)" >
-          Replace
-        </button>
         Count:<strong>{{parsed.length}}</strong>
       </ng-container>
     </div>

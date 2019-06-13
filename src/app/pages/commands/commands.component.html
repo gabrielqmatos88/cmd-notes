@@ -11,31 +11,36 @@
 </div>
 <div class="row" *ngIf="!selectedCommand">
   <div class="col-md-6">
-    <div class="form-group">
+    <div class="input-group">
       <input class="form-control form-control-sm" type="text" name="term" [(ngModel)]="term">
+      <div class="input-group-append">
+        <button class="btn btn-secondary btn-sm">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
     </div>
   </div>
   <div class="col-md-6">
     <div class="form-group text-right">
         <div class="btn-group">
-          <button class="btn btn-sm btn-primary btn-hover-span" (click)="setCmd()">
+          <button class="btn btn-sm btn-secondary btn-hover-span" (click)="setCmd()">
             <!-- Novo -->
             <i class="fas fa-file-code"></i>
-            <span>Novo</span>
+            <span class="ml-2">Novo</span>
           </button>
-          <button class="btn btn-sm btn-primary btn-hover-span" data-toggle="modal" data-target="#commandModal" (click)="resetImport()">
+          <button class="btn btn-sm btn-secondary btn-hover-span" data-toggle="modal" data-target="#commandModal" (click)="resetImport()">
             <i class="fas fa-file-download"  title="Import"></i>
-            <span>Import</span>
+            <span class="ml-2">Import</span>
           </button>
-            <button class="btn btn-sm btn-primary btn-hover-span" (click)="exportCommandList()">
+            <button class="btn btn-sm btn-secondary btn-hover-span" (click)="exportCommandList()">
               <i class="fas fa-file-upload"></i>
-              <span>Export</span>
+              <span class="ml-2">Export</span>
             </button>
         </div>
     </div>
   </div>
   <div class="col-12" *ngIf="!commandList || !commandList.length">
-    <div class="alert alert-primary">
+    <div class="alert alert-secondary">
       There's no commands here, please <strong class="as-link" data-toggle="modal" data-target="#commandModal" (click)="resetImport()" >import</strong> some or create a <strong class="as-link" (click)="setCmd()">new one</strong>
     </div>
   </div>
@@ -46,15 +51,17 @@
       <tbody>
         <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
           <td>{{ cmd.name }}</td>
-          <td class="text-right cmd-icons">
-            <button class="btn btn-link btn-sm btn-link-primary btn-hover-span m-0" (click)="setCmd(cmd)">
-                <i class="fas fa-file-code"></i>
-                <span>Editar</span>
-            </button>
-            <button class="btn btn-sm btn-link btn-link-danger btn-hover-span m-0" (click)="excluir(cmd)">
-                <i class="fas fa-trash"></i>
-                <span>Excluir</span>
-            </button>
+          <td class="text-right">
+              <div class="btn-group btn-group-sm">
+                  <button class="btn btn-secondary btn-hover-span m-0" (click)="setCmd(cmd)">
+                      <i class="fas fa-file-code"></i>
+                      <span class="ml-2">Editar</span>
+                  </button>
+                  <button class="btn btn-danger btn-hover-span m-0" (click)="excluir(cmd)">
+                      <i class="fas fa-trash"></i>
+                      <span class="ml-2">Excluir</span>
+                  </button>
+              </div>
           </td>
         </tr>
       </tbody>
@@ -64,19 +71,17 @@
 <div class="row" >
   <div class="col-sm-12">
     <div class="row">
-      <div class="col-sm-12 col-md-6">
-        <ul class="nav nav-pills nav-fill flex-column flex-sm-row mb-md-4" role="tablist" *ngIf="!!selectedCommand">
-          <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0 active" [ngClass]="{ 'active': preview }" href="javascript:void(0)" (click)="doPreview()" >
-              <i class="fas fa-caret-square-right"></i>&nbsp;&nbsp;Preview
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0 active" [ngClass]="{ 'active': !preview }" href="javascript:void(0)" (click)="startEdit()" >
-              <i class="fas fa-edit"></i>&nbsp;&nbsp;Edit
-            </a>
-          </li>
-        </ul>
+      <div class="col-12 col-md-8 mb-4">
+        <div class="btn-group" *ngIf="!!selectedCommand">
+          <button class="btn btn-secondary" [ngClass]="{ 'active': preview }" (click)="doPreview()">
+              <i class="fas fa-caret-square-right"></i>
+              <span class="ml-2">Preview</span>
+          </button>
+          <button class="btn btn-secondary" [ngClass]="{ 'active': !preview }" (click)="startEdit()">
+              <i class="fas fa-edit"></i>
+              <span class="ml-2">Edit</span>
+          </button>
+        </div>
       </div>
     </div>
     <div class="row cmd-title" [hidden]="!selectedCommand" >
@@ -86,14 +91,16 @@
         </h3>
       </div>
       <div class="col-12 col-md-4 text-right">
-          <button type="button" class="btn btn-link btn-sm btn-hover-span ml-0 mr-0" (click)="exportSingleCmd()">
-            <i class="fas fa-upload bt-copy"></i>
-            <span>Export</span>
-          </button>
-        <button type="button" class="btn btn-link btn-sm btn-hover-span ml-0 mr-0" (click)="selectedCommand = null; term = ''">
-          <i class="fas fa-backspace bt-copy"></i>
-          <span>Voltar</span>
-        </button>
+          <div class="btn-group btn-group-sm">
+              <button type="button" class="btn btn-secondary btn-hover-span ml-0 mr-0" (click)="exportSingleCmd()">
+                  <i class="fas fa-upload bt-copy"></i>
+                  <span class="ml-2">Export</span>
+                </button>
+              <button type="button" class="btn btn-secondary btn-hover-span ml-0 mr-0" (click)="selectedCommand = null; term = ''">
+                <i class="fas fa-backspace bt-copy"></i>
+                <span class="ml-2">Voltar</span>
+              </button>
+          </div>
       </div>
     </div>
     <toaster #saveAlert></toaster>
@@ -113,12 +120,12 @@
         </label>
         <textarea class="form-control rounded-0" id="cmd" name="cmd" [(ngModel)]="commandStr" (mouseenter)="autoGrowTextZone($event)" (keyup)="autoGrowTextZone($event)" (change)="updateCommandStr($event)" #cmd="ngModel" required></textarea>
     </div>
-    <button type="button" class="btn btn-primary" (click)="save()">
+    <button type="button" class="btn btn-secondary" (click)="save()">
       Save
     </button>
   </form>
 </div>
-  <div class="col-md-12 preview-container border rounded" *ngIf="!!selectedCommand && preview">
+  <div class="col-md-12 preview-container rounded" *ngIf="!!selectedCommand && preview">
     <h4>Preview</h4>
     <ng-container *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length">
       <div class="row" *ngFor="let p of selectedCommand.parameters; let index=index;">
@@ -135,19 +142,19 @@
 
     <div class="row">
       <div class="col-md-6">
-          <button type="button" class="btn btn-primary" *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length" (click)="generateCmd()">
+          <button type="button" class="btn btn-secondary" *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length" (click)="generateCmd()">
             Generate
           </button>
       </div>
       <div class="col-md-6 text-right">
-        <button type="button" class="btn btn-outline-primary btn-sm" *ngIf="!!generatedCommand" (click)="copyToClipboard()">
+        <button type="button" class="btn btn-secondary btn-sm" *ngIf="!!generatedCommand" (click)="copyToClipboard()">
           <i class="fas fa-copy bt-copy" ></i>
           Copy
         </button>
       </div>
     </div>
     <div *ngIf="generatedCommand" class="cmd-result-area">
-      <pre class="cmd-result border rounded">{{ generatedCommand }}
+      <pre class="cmd-result rounded bg-secondary">{{ generatedCommand }}
       </pre>
     </div>
   </div>

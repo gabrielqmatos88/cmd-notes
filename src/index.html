@@ -26,10 +26,13 @@
     }
     var theme = localStorage.getItem('theme');
     $(document).ready(function(){
-      $('#theme').attr('href' ,'/assets/css/bootstrap.' + theme + '.css');
+      var baseHref = $('base').attr('href');
+      $('#theme').attr('href' , baseHref + 'assets/css/bootstrap.' + theme + '.css');
       setTimeout(function(){
         $('body').addClass('themed');
         $('body').addClass('theme-' + theme);
+        var favHref = $('link[rel="icon"]').attr('href');
+        $('link[rel="icon"]').attr('href', baseHref + favHref.replace('/', ''));
       }, 300);
     });
   })();
