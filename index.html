@@ -6,10 +6,10 @@
   <base href="/cmd-notes/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="/cmd-fav.ico">
-<link rel="stylesheet" href="styles.320c5a23bd69416ed4ba.css"></head>
+<link rel="stylesheet" href="styles.811330d58fef5dbf5b50.css"></head>
 <body>
   <app-root></app-root>
-<script type="text/javascript" src="runtime.06daa30a2963fa413676.js"></script><script type="text/javascript" src="polyfills.f4b78b65941f8063fd57.js"></script><script type="text/javascript" src="scripts.ea9a7b51b5073e2a08c5.js"></script><script type="text/javascript" src="main.d3ca3d6f3ea0c78e6af6.js"></script></body>
+<script type="text/javascript" src="runtime.06daa30a2963fa413676.js"></script><script type="text/javascript" src="polyfills.f4b78b65941f8063fd57.js"></script><script type="text/javascript" src="scripts.ea9a7b51b5073e2a08c5.js"></script><script type="text/javascript" src="main.69c415164fe48b85f844.js"></script></body>
 <script>
   (function(){
     var redirect = sessionStorage.redirect;
@@ -26,10 +26,12 @@
     var theme = localStorage.getItem('theme');
     $(document).ready(function(){
       var baseHref = $('base').attr('href');
-      $('#theme').attr('href' , baseHref + '/assets/css/bootstrap.' + theme + '.css');
+      $('#theme').attr('href' , baseHref + 'assets/css/bootstrap.' + theme + '.css');
       setTimeout(function(){
         $('body').addClass('themed');
         $('body').addClass('theme-' + theme);
+        var favHref = $('link[rel="icon"]').attr('href');
+        $('link[rel="icon"]').attr('href', baseHref + favHref.replace('/', ''));
       }, 300);
     });
   })();
