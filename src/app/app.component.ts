@@ -4,6 +4,10 @@ import { NgForm } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 
 declare var $: any;
+export interface ITheme {
+  name: string;
+  icon: string;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,6 +17,23 @@ export class AppComponent implements AfterViewInit, OnInit {
   @ViewChild('form', { read: NgForm })
   form: NgForm;
   commandList: ICommand[] = [];
+  // 'light',
+  //   'dark',
+  //   'sketch'
+  themeList: ITheme[] = [
+    {
+      name: 'light',
+      icon: 'sun'
+    },
+    {
+      name: 'dark',
+      icon: 'moon'
+    },
+    {
+      name: 'sketch',
+      icon: 'broom'
+    }
+  ];
 
   @ViewChild('saveAlert')
   saveAlert: any;
@@ -29,7 +50,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   changeTheme(type) {
     const baseHref = $('base').attr('href');
-    console.log('baseh')
     this.renderer.removeClass(document.body, 'theme-' + this.currentTheme);
     this.currentTheme = type;
     this.renderer.addClass(document.body, 'theme-' + this.currentTheme);

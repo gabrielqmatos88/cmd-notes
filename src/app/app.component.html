@@ -5,6 +5,17 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="btn btn-toolbar">
+          <div class="btn-group-hover-span btn-group-sm" *ngFor="let th of themeList">
+            <button class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === th.name }" (click)="changeTheme(th.name)">
+              <i class="fas fa-{{th.icon}}"></i>
+              <span class="ml-2">{{th.name}}</span>
+            </button>
+            <button class="ml-2 btn btn-secondary btn-pointer d-sm-none" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fas fa-align-justify"></i>
+            </button>
+          </div>
+        </div>
+        <!-- <div class="btn btn-toolbar d-none">
             <div class="btn-group btn-group-hover-span" role="group" aria-label="Theme selector">
               <button type="button" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'light' }" (click)="changeTheme('light')">
                 <i class="fas fa-sun"></i>
@@ -18,7 +29,7 @@
             <button class="ml-2 btn btn-secondary btn-pointer d-sm-none" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
               <i class="fas fa-align-justify"></i>
             </button>
-        </div>
+        </div> -->
     </div>
 </nav>
 <div class="container-fluid">
@@ -42,7 +53,7 @@
                     <a [routerLink]="['/password']" routerLinkActive="active" class="nav-link">
                       <i class="fas fa-key"></i>
                       <span class="ml-2">Password</span>
-                    </a>
+                    </a>co
                   </li>
                 </ul>
               </div>
