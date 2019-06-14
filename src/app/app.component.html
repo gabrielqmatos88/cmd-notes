@@ -5,8 +5,8 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="btn btn-toolbar">
-          <div class="btn-group-hover-span btn-group-sm" *ngFor="let th of themeList">
-            <button class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === th.name }" (click)="changeTheme(th.name)">
+          <div class="btn-group-hover-span btn-group-sm" >
+            <button *ngFor="let th of themeList" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === th.name }" (click)="changeTheme(th.name)">
               <i class="fas fa-{{th.icon}}"></i>
               <span class="ml-2">{{th.name}}</span>
             </button>
@@ -53,7 +53,7 @@
                     <a [routerLink]="['/password']" routerLinkActive="active" class="nav-link">
                       <i class="fas fa-key"></i>
                       <span class="ml-2">Password</span>
-                    </a>co
+                    </a>
                   </li>
                 </ul>
               </div>
