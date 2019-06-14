@@ -8,18 +8,22 @@
       </button>
   </div>
   <div class="col-12 mt-3" *ngIf='!!parsed && parsed.length'>
-    <div class="text-right mb-2">
-      <div class="btn-group">
-          <button class="btn btn-secondary btn-sm" (click)="add()">
-            Add
-          </button>
-          <button *ngIf="parsed.length > 1" class="btn btn-sm btn-secondary" (click)="add(true)" >
-            Replace
-          </button>
+    <div class="row mb-2">
+        <div class="col-7">
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-sm" (click)="add()">
+              Add
+            </button>
+            <button *ngIf="parsed.length > 1" class="btn btn-sm btn-secondary" (click)="add(true)" >
+              Replace
+            </button>
+        </div>
       </div>
-      <ng-container *ngIf="parsed.length > 1">
-        Count:<strong>{{parsed.length}}</strong>
-      </ng-container>
+      <div class="col-5 text-right">
+        <ng-container *ngIf="parsed.length > 1">
+          Count:<strong>{{parsed.length}}</strong>
+        </ng-container>
+      </div>
     </div>
     <div *ngFor="let cmd of parsed; let i = index;">
       <div class="cmd-header">

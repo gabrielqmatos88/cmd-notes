@@ -91,6 +91,12 @@ table#parsed-data td.xpath-value {
   padding-top: 15px;
 }
 
+.cmd-header {
+  border-bottom: 1px solid #dadada;
+  background-color: #ededed;
+  cursor: pointer;
+}
+
 /* Dark theme */
 .theme-dark .btn-theme-active {
   color: #fff;
@@ -153,6 +159,11 @@ table#parsed-data td.xpath-value {
   color: #444;
   background-color: #444444;
   cursor: no-drop;
+}
+
+.theme-dark .cmd-header {
+  border-bottom: 1px solid #353535;
+  background-color: #404040;
 }
 
 /* Light them */
