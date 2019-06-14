@@ -1,33 +1,73 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container">
         <h1 class="navbar-brand"><i class="fas fa-terminal"></i> CMD Notes</h1>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="btn-group btn-group-sm btn-group-hover-span" role="group" aria-label="Theme selector">
-          <button type="button" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'light' }" (click)="changeTheme('light')">
-            <i class="fas fa-sun"></i>
-            <span class="ml-2">Light</span>
-          </button>
-          <button type="button" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'dark' }" (click)="changeTheme('dark')">
-            <i class="fas fa-moon"></i>
-            <span class="ml-2">Dark</span>
-          </button>
+        <div class="btn btn-toolbar">
+            <div class="btn-group btn-group-hover-span" role="group" aria-label="Theme selector">
+              <button type="button" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'light' }" (click)="changeTheme('light')">
+                <i class="fas fa-sun"></i>
+                <span class="ml-2">Light</span>
+              </button>
+              <button type="button" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === 'dark' }" (click)="changeTheme('dark')">
+                <i class="fas fa-moon"></i>
+                <span class="ml-2">Dark</span>
+              </button>
+            </div>
+            <button class="ml-2 btn btn-secondary btn-pointer d-sm-none" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fas fa-align-justify"></i>
+            </button>
         </div>
     </div>
 </nav>
 <div class="container-fluid">
+    <div class="row d-sm-none">
+        <div class="col-12">
+            <div class="collapse" aria-expanded="false" id="nav1">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a [routerLink]="['/commands']" routerLinkActive="active" class="nav-link">
+                      <i class="fas fa-terminal"></i>
+                      <span class="ml-2">Commands</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a [routerLink]="['/wiki']" routerLinkActive="active" class="nav-link">
+                      <i class="fas fa-book"></i>
+                      <span class="ml-2">WiKi</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a [routerLink]="['/password']" routerLinkActive="active" class="nav-link">
+                      <i class="fas fa-key"></i>
+                      <span class="ml-2">Password</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+        </div>
+    </div>
+  <div class="row m-0 p-0 d-none">
+      <div class="col-12">
+        <ul class="nav nav-fill nav-menu">
+          <li class="nav-item active"> <a href="#" class="nav-link">Item</a></li>
+          <li class="nav-item"> <a href="#" class="nav-link">Item</a></li>
+          <li class="nav-item"> <a href="#" class="nav-link">Item</a></li>
+        </ul>
+      </div>
+    </div>
 	<div class="row">
-		<div class="col-md-8 offset-md-2" >
+		<div class="col-md-12">
       <div class="row">
-        <div class="col-xs-12 col-md-4">
-            <ul class="list-group route-menu">
+        <div class="col-12 col-sm-4 col-md-3 col-lg-2 d-none d-sm-block p-0 m-0">
+            <ul class="list-group route-menu p-0 m-0">
               <li [routerLink]="['/commands']" routerLinkActive="active" class="list-group-item"><i class="fa fa-terminal"></i> <span>Commands</span></li>
               <li [routerLink]="['/wiki']" routerLinkActive="active" class="list-group-item"><i class="fas fa-book"></i> <span>Wiki</span> </li>
               <li [routerLink]="['/password']" routerLinkActive="active" class="list-group-item"><i class="fas fa-key"></i> <span>Passwords</span></li>
             </ul>
         </div>
-        <div class="col-xs-12 col-md-8 main-content">
+        <div class="col-12 col-sm-8 col-md-9 col-lg-10 main-content">
           <router-outlet></router-outlet>
         </div>
       </div>
