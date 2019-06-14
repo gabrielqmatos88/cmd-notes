@@ -40,12 +40,12 @@ export class AppComponent implements AfterViewInit, OnInit {
     {
       id: 4,
       name: 'lumen',
-      icon: 'broom'
+      icon: 'palette'
     },
     {
       id: 5,
       name: 'litera',
-      icon: 'broom'
+      icon: 'palette'
     }
   ];
 
