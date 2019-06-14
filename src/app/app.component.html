@@ -6,10 +6,25 @@
         </button>
         <div class="btn btn-toolbar">
           <div class="btn-group-hover-span btn-group-sm" >
-            <button *ngFor="let th of themeList" class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === th.name }" (click)="changeTheme(th.name)">
-              <i class="fas fa-{{th.icon}}"></i>
-              <span class="ml-2">{{th.name}}</span>
-            </button>
+            <ng-container *ngFor="let th of themeList">
+                <button class="btn btn-secondary" [ngClass]="{ 'btn-theme-active': currentTheme === th.name }" (click)="changeTheme(th.name)">
+                  <i class="fas fa-{{th.icon}}"></i>
+                  <span class="ml-2">{{th.name}}</span>
+                </button>
+            </ng-container>
+            <!-- <ng-container *ngIf="themeList2">
+                <div class="dropdown" >
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ currentTheme }}
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" *ngFor="let th of themeList2" [ngClass]="{ 'btn-theme-active': currentTheme === th.name }" (click)="changeTheme(th.name)">
+                        <i class="fas fa-{{th.icon}}"></i>
+                        <span class="ml-2">{{th.name}}</span>
+                    </button>
+                  </div>
+              </div>
+            </ng-container> -->
             <button class="ml-2 btn btn-secondary btn-pointer d-sm-none" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
               <i class="fas fa-align-justify"></i>
             </button>

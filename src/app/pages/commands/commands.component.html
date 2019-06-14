@@ -85,11 +85,13 @@
                 </button>
               </div>
           </div>
-          <div class="col-4 text-right">
-              <button type="button" class="btn btn-secondary ml-0 mr-0" (click)="selectedCommand = null; term = ''">
-                <i class="fas fa-backspace bt-copy"></i>
-                <span class="ml-2">Voltar</span>
-              </button>
+          <div class="col-4 text-right" *ngIf="!!selectedCommand">
+              <div class="btn-group">
+                  <button type="button" class="btn btn-secondary ml-0 mr-0" (click)="selectedCommand = null; term = ''">
+                    <i class="fas fa-backspace bt-copy"></i>
+                    <span class="ml-2">Voltar</span>
+                  </button>
+              </div>
           </div>
         </div>
       </div>

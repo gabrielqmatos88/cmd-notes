@@ -5,6 +5,7 @@ import { DOCUMENT } from '@angular/platform-browser';
 
 declare var $: any;
 export interface ITheme {
+  id: number;
   name: string;
   icon: string;
 }
@@ -22,18 +23,34 @@ export class AppComponent implements AfterViewInit, OnInit {
   //   'sketch'
   themeList: ITheme[] = [
     {
+      id: 1,
       name: 'light',
       icon: 'sun'
     },
     {
+      id: 2,
       name: 'dark',
       icon: 'moon'
     },
     {
+      id: 3,
       name: 'sketch',
+      icon: 'broom'
+    },
+    {
+      id: 4,
+      name: 'lumen',
+      icon: 'broom'
+    },
+    {
+      id: 5,
+      name: 'litera',
       icon: 'broom'
     }
   ];
+
+  themeList1: ITheme[];
+  themeList2: ITheme[];
 
   @ViewChild('saveAlert')
   saveAlert: any;
@@ -46,7 +63,10 @@ export class AppComponent implements AfterViewInit, OnInit {
 
 
   currentTheme = localStorage.getItem('theme');
-  constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document) {}
+  constructor(private renderer: Renderer2, @Inject(DOCUMENT) private document) {
+    this.themeList1 = this.themeList.filter(th => th.id <= 2);
+    this.themeList2 = this.themeList.filter(th => th.id > 2);
+  }
 
   changeTheme(type) {
     const baseHref = $('base').attr('href');
