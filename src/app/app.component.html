@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container">
         <h1 class="navbar-brand"><i class="fas fa-terminal"></i> CMD Notes</h1>
-        <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
+        <button id="btn-responsive" class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="btn btn-toolbar">
@@ -75,7 +75,7 @@
         </div>
     </div>
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-12 mt-sm-4">
       <div class="row">
         <div class="col-12 col-sm-4 col-md-3 col-lg-2 d-none d-sm-block p-0 m-0">
             <ul class="list-group route-menu p-0 m-0">
@@ -84,7 +84,7 @@
               <li [routerLink]="['/password']" routerLinkActive="active" class="list-group-item"><i class="fas fa-key"></i> <span>Passwords</span></li>
             </ul>
         </div>
-        <div class="col-12 col-sm-8 col-md-9 col-lg-10 main-content">
+        <div class="col-12 col-sm-8 col-md-9 ml-lg-4 col-lg-8 main-content card">
           <router-outlet></router-outlet>
         </div>
       </div>

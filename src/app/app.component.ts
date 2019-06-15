@@ -68,12 +68,12 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.themeList2 = this.themeList.filter(th => th.id > 2);
   }
 
-  changeTheme(type) {
+  changeTheme(theme) {
     const baseHref = $('base').attr('href');
     this.renderer.removeClass(document.body, 'theme-' + this.currentTheme);
-    this.currentTheme = type;
+    this.currentTheme = theme;
     this.renderer.addClass(document.body, 'theme-' + this.currentTheme);
-    $('#theme').attr('href', baseHref + 'assets/css/bootstrap.' + type + '.css');
+    $('#theme').attr('href', baseHref + 'assets/css/bootstrap.' + theme + '.css');
     localStorage.setItem('theme', this.currentTheme);
   }
   setCmd(command?: ICommand) {

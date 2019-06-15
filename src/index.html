@@ -33,6 +33,9 @@
         $('body').addClass('theme-' + theme);
         var favHref = $('link[rel="icon"]').attr('href');
         $('link[rel="icon"]').attr('href', baseHref + favHref.replace('/', ''));
+        $('#nav1 li').on('click', function() {
+          $('#nav1').removeClass('show');
+        });
       }, 300);
     });
   })();
