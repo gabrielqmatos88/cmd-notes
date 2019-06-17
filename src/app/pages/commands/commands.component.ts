@@ -108,7 +108,7 @@ export class CommandsComponent implements OnInit, AfterViewInit {
   }
 
   updateName(e) {
-    this.selectedCommand.name = e.target.value;
+    // this.selectedCommand.name = e.target.value;
   }
 
   updateCommandStr(e) {
@@ -156,6 +156,7 @@ export class CommandsComponent implements OnInit, AfterViewInit {
   save() {
     this.submitted = true;
     if (this.form.valid) {
+      this.selectedCommand.name = this.commandName;
       if (this.selectedCommand.isNew) {
         this.commandList.push(this.selectedCommand);
         this.selectedCommand.isNew = null;

@@ -166,12 +166,22 @@ table#parsed-data td.xpath-value {
   background-color: #404040;
 }
 
-/* Light them */
+/* Light theme */
 .theme-light .btn-theme-active {
-  background-color: #707b7b;
+  background-color: #d7d6d6;
 }
 
 .theme-light .preview-container  {
   background-color: #ecf0f1;
+}
+
+.theme-light .list-group-item.active {
+  background-color: #ecf0f1;
+  color: inherit;
+  border-color: #c2c2c2;
+}
+
+.theme-light .list-group.route-menu .list-group-item {
+  font-weight: bolder;
 }
 

@@ -52,7 +52,22 @@
         <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
           <td class="text-break">{{ cmd.name }}</td>
           <td class="text-right">
-              <div class="btn-group btn-group-sm">
+            <div class="dropdown">
+                <button class="btn btn-link m-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <button class="dropdown-item" (click)="setCmd(cmd)">
+                    <i class="fas fa-edit"></i>
+                    Editar
+                  </button>
+                  <button class="dropdown-item" (click)="excluir(cmd)">
+                    <i class="fas fa-trash"></i>
+                      Excluir
+                    </button>
+                </div>
+            </div>
+              <!-- <div class="btn-group btn-group-sm">
                   <button class="btn btn-secondary btn-hover-span m-0" (click)="setCmd(cmd)">
                       <i class="fas fa-edit"></i>
                       <span class="ml-2">Editar</span>
@@ -61,7 +76,7 @@
                       <i class="fas fa-trash"></i>
                       <span class="ml-2">Excluir</span>
                   </button>
-              </div>
+              </div> -->
           </td>
         </tr>
       </tbody>

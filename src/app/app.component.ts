@@ -18,9 +18,6 @@ export class AppComponent implements AfterViewInit, OnInit {
   @ViewChild('form', { read: NgForm })
   form: NgForm;
   commandList: ICommand[] = [];
-  // 'light',
-  //   'dark',
-  //   'sketch'
   themeList: ITheme[] = [
     {
       id: 1,
@@ -31,21 +28,6 @@ export class AppComponent implements AfterViewInit, OnInit {
       id: 2,
       name: 'dark',
       icon: 'moon'
-    },
-    {
-      id: 3,
-      name: 'sketch',
-      icon: 'broom'
-    },
-    {
-      id: 4,
-      name: 'lumen',
-      icon: 'palette'
-    },
-    {
-      id: 5,
-      name: 'litera',
-      icon: 'palette'
     }
   ];
 

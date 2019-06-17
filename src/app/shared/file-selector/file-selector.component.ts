@@ -111,4 +111,7 @@ export class FileSelectorComponent implements OnInit {
       this.errorCustomMessage = err;
     });
   }
+  cancel() {
+    this.reset();
+  }
 }
