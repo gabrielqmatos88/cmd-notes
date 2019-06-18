@@ -152,7 +152,7 @@
     </button>
   </form>
 </div>
-  <div class="col-md-12 preview-container rounded" *ngIf="!!selectedCommand && preview">
+  <div class="col preview-container rounded m-3 p-3" *ngIf="!!selectedCommand && preview">
     <h4>Preview</h4>
     <ng-container *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length">
       <div class="row" *ngFor="let p of selectedCommand.parameters; let index=index;">
