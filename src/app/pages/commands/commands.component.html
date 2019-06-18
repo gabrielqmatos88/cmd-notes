@@ -52,8 +52,8 @@
         <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
           <td class="text-break">{{ cmd.name }}</td>
           <td class="text-right">
-            <div class="dropdown">
-                <button class="btn btn-link m-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown command-list-dropdown">
+                <button class="btn btn-link btn-ellipsis m-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu">

@@ -97,6 +97,10 @@ table#parsed-data td.xpath-value {
   cursor: pointer;
 }
 
+.command-list-dropdown .dropdown-menu.show {
+  transform: translate3d(-116px, 35px, 0px) !important;
+}
+
 /* Dark theme */
 .theme-dark .btn-theme-active {
   color: #fff;
@@ -143,7 +147,6 @@ table#parsed-data td.xpath-value {
   font-weight: 700;
 }
 
-
 .theme-dark .form-control {
   color: #444;
   background-color: #d2d2d2;
@@ -159,6 +162,26 @@ table#parsed-data td.xpath-value {
   color: #444;
   background-color: #444444;
   cursor: no-drop;
+}
+
+.theme-dark .btn.btn-ellipsis {
+  color: #fff;
+}
+
+.theme-dark .command-list-dropdown.show .btn.btn-ellipsis {
+  background-color: #222;
+}
+
+.theme-dark .btn.btn-ellipsis:hover {
+  background-color: #222;
+}
+
+
+
+.theme-dark .command-list-dropdown .dropdown-item:hover, .theme-dark .command-list-dropdown .dropdown-item:focus {
+  color: #fff;
+  text-decoration: none;
+  background-color: #2b2b2b;
 }
 
 .theme-dark .cmd-header {
