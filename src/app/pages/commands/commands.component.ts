@@ -1,6 +1,7 @@
+import { DotDropdownItem } from './../../shared/dot-dropdown/dot-dropdown.component';
 import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { NgForm, Validators, FormControl, ValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
-import { ICommand, IParameter } from 'src/app/icommand';
+import { ICommand, IParameter, ParameterType } from 'src/app/icommand';
 import { ClipboardService } from 'ngx-clipboard';
 import { CommandsService } from './../../shared/services/commands.service';
 import { downloadFile } from 'src/app/utils';
@@ -48,7 +49,38 @@ export class CommandsComponent implements OnInit, AfterViewInit {
   selectedCommand: ICommand;
   submitted = false;
   preview = false;
+  editVariables = false;
   action: string = '';
+
+  toggleCmd(cmd: ICommand) {
+    cmd.opened = !cmd.opened;
+  }
+  createPopupItems(cmd: ICommand): DotDropdownItem[] {
+    return [
+      {
+        label: 'Edit',
+        action: () => {
+          this.setCmd(cmd);
+          console.log('Editar', cmd.name);
+        },
+        icon: 'fa-edit'
+      },
+      {
+        label: 'Export',
+        action: () => {
+          this.exportSingleCmd(cmd);
+        },
+        icon: 'fa-share-square'
+      },
+      {
+        label: 'Delete',
+        action: () => {
+          this.excluir(cmd);
+        },
+        icon: 'fa-trash'
+      },
+    ];
+  }
   setCmd(command?: ICommand) {
     if (!!command && command === this.selectedCommand) {
       return;
@@ -82,25 +114,29 @@ export class CommandsComponent implements OnInit, AfterViewInit {
     this.commandName = this.selectedCommand.name;
     this.commandStr = this.selectedCommand.cmdStr;
   }
-  private splitCamelCaseWithAbbreviations(s){
-    return s.split(/([A-Z][a-z]+)/).filter(function(e){return e}).join(' ');
-  }
   private parseParameters(command: ICommand): IParameter[] {
-    const parameters =  (command.cmdStr).match(/\$\{\s*([a-z0-9\-_]+)(:[a-z\.\-\_0-9\,\s\@]+)?\s*\}/ig) || [];
+    const parameters =  (command.cmdStr || '').match(/#([a-z0-9\-_]+)#/ig) || [];
+    const configuredParameters = command.parameters || [];
     const parsedParameters: IParameter[] = [];
+    const paramsCache = {};
     for (let i = 0; i < parameters.length; i++) {
       const par = parameters[i];
-      let defaultValue;
-      if (/:[a-z\.\-\_0-9\,\s\@]+/.test(par)) {
-        defaultValue = /:[a-z\.\-\_0-9\,\s\@]+/.exec(par)[0].replace(':', '').trim();
+      const paramName = par.replace(/#/g, '').trim();
+      const configuredParam = configuredParameters.find( p => p.name === paramName);
+      if (configuredParam && !paramsCache[paramName]) {
+        parsedParameters.push(configuredParam);
+        configuredParam.type = configuredParam.type || ParameterType.text;
+        paramsCache[paramName] = true;
+        continue;
       }
-      const paramName = par.replace(/[\$\{\}]/g, '').replace(/:[a-z\.\-\_0-9\,\s\@]+/, '').trim();
-      if (!parsedParameters.find( p => p.name === paramName)) {
+      if (!paramsCache[paramName] && !parsedParameters.find( p => p.name === paramName)) {
         parsedParameters.push({
           name: paramName,
-          label: (paramName || ''),
-          value: defaultValue || '',
-          defaultValue: defaultValue
+          label: '',
+          value: '',
+          defaultValue: '',
+          type: ParameterType.text,
+          listParams: ''
         });
       }
     }
@@ -114,6 +150,14 @@ export class CommandsComponent implements OnInit, AfterViewInit {
   updateCommandStr(e) {
     this.selectedCommand.cmdStr = e.target.value;
     this.autoGrowTextZone(e);
+  }
+
+  generateVariables() {
+    if (!this.selectedCommand) {
+      return;
+    }
+    this.selectedCommand.cmdStr = this.commandStr;
+    this.selectedCommand.parameters = this.parseParameters(this.selectedCommand);
   }
 
   copyToClipboard() {
@@ -132,11 +176,11 @@ export class CommandsComponent implements OnInit, AfterViewInit {
     // this.generatedCommand = '';
   }
 
-  generateCmd(){
+  generateCmd() {
     let cmd = this.selectedCommand.cmdStr || '';
     for (let i = 0; i < this.selectedCommand.parameters.length; i++) {
       const p = this.selectedCommand.parameters[i];
-      const combinedExp = new RegExp('\\$\\{\\s*' + p.name + '(:[a-z\\.\\-\\_0-9\\,\\s\\@]+)?\\s*\\}', 'gi');
+      const combinedExp = new RegExp('#' + p.name + '#', 'gi');
       cmd = cmd.replace(combinedExp, p.value);
     }
     this.generatedCommand = cmd;
@@ -199,25 +243,26 @@ export class CommandsComponent implements OnInit, AfterViewInit {
     this.commandList = this.commandService.getCommands(true);
   }
   exportCommandList(): void {
-    const cleanCmdList = this.commandList.map( c => ({ cmdStr: c.cmdStr, name: c.name, tag: c.tag }));
+    // const cleanCmdList = this.commandList.map( c => ({ cmdStr: c.cmdStr, name: c.name, tag: c.tag }));
     const dataToExport = {
       type: 'full_list',
-      content: cleanCmdList
+      content: this.commandList
     };
     downloadFile(JSON.stringify(dataToExport), 'cmd-notes.json');
   }
 
-  exportSingleCmd(): void {
-    const cmdToExport: ICommand = {
-      name: this.selectedCommand.name,
-      cmdStr: this.selectedCommand.cmdStr,
-      tag: this.selectedCommand.tag
-    };
+  exportSingleCmd(cmd?: ICommand): void {
+    cmd = cmd || this.selectedCommand;
+    // const cmdToExport: ICommand = {
+    //   name: cmd.name,
+    //   cmdStr: cmd.cmdStr,
+    //   tag: cmd.tag
+    // };
     const dataToExport = {
       type: 'single',
-      content: cmdToExport
+      content: this.selectedCommand
     };
-    let filename = this.selectedCommand.name;
+    let filename = cmd.name;
     filename = filename.toLowerCase().trim().replace(/\s+/ig, '-') + '.json';
     downloadFile(JSON.stringify(dataToExport), filename);
   }

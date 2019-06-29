@@ -1,3 +1,7 @@
+import { ToggleSwitcherComponent } from './toggle-switcher/toggle-switcher.component';
+import { HelpModalComponent } from './help-modal/help-modal-component';
+import { DotDropdownComponent } from './dot-dropdown/dot-dropdown.component';
+import { CmdPreviewComponent } from './command-preview/cmd-preview.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +11,7 @@ import { ToasterComponent } from './toaster/toaster.component';
 import { InsensitiveSearch } from './insensitive-search/insensitive-search.pipe';
 import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { CommandsService } from './services/commands.service';
+import { HelpButtonComponent } from './help-button/help-button.component';
 
 @NgModule({
   imports: [
@@ -18,6 +23,11 @@ import { CommandsService } from './services/commands.service';
     ToasterComponent,
     PageHeaderComponent,
     FileSelectorComponent,
+    CmdPreviewComponent,
+    DotDropdownComponent,
+    HelpButtonComponent,
+    HelpModalComponent,
+    ToggleSwitcherComponent,
     // pipes
     InsensitiveSearch
   ],
@@ -26,6 +36,11 @@ import { CommandsService } from './services/commands.service';
     ToasterComponent,
     PageHeaderComponent,
     FileSelectorComponent,
+    CmdPreviewComponent,
+    DotDropdownComponent,
+    HelpButtonComponent,
+    HelpModalComponent,
+    ToggleSwitcherComponent,
     // pipes
     InsensitiveSearch
   ]

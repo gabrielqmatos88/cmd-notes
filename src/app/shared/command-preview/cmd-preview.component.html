@@ -1,0 +1,49 @@
+<div class="row">
+<div class="col rounded m-3 p-3 bg-preview" *ngIf="!!cmd">
+  <h4>Preview</h4>
+  <ng-container *ngIf="!!cmd.parameters && cmd.parameters.length">
+    <div class="row" *ngFor="let p of cmd.parameters; let index=index;">
+      <div class="col-md-8">
+          <div class="form-group" *ngIf="!p.type">
+            <label for="{{index}}-{{p.name}}">
+              {{p.label}}
+            </label>
+            <input type="text" class="form-control" name="{{index}}-{{p.name}}" [(ngModel)]="p.value" required />
+          </div>
+          <div class="form-group" *ngIf="p.type === 3">
+            <label for="{{index}}-{{p.name}}">
+              {{p.label}}
+            </label>
+            <select class="form-control" name="{{index}}-{{p.name}}" id="{{index}}-{{p.name}}" [(ngModel)]="p.value">
+              <option *ngFor="let o of selectOptions" value="{{o}}">{{o}}</option>
+            </select>
+          </div>
+          <div class="form-group" *ngIf="p.type === 2">
+            <label for="{{index}}-{{p.name}}">
+              {{p.label}}
+            </label>
+            <div class="d-block">
+              <toggle-switcher tgId="{{index}}-{{p.name}}" tgName="{{index}}-{{p.name}}" [(tgVal)]="p.value"></toggle-switcher>
+            </div>
+          </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="row">
+    <div class="col-6">
+        <button type="button" class="btn btn-secondary" *ngIf="!!cmd.parameters && cmd.parameters.length" (click)="generateCmd()">
+          Generate
+        </button>
+    </div>
+    <div class="col-6 text-right">
+      <button type="button" *ngIf="!!generatedCommand || !cmd.parameters || !cmd.parameters.length" class="btn btn-secondary btn-sm" (click)="copyToClipboard()">
+        <i class="fas fa-copy bt-copy" ></i>
+        Copy
+      </button>
+    </div>
+  </div>
+  <div *ngIf="generatedCommand || !cmd.parameters || !cmd.parameters.length" class="cmd-result-area mt-2">
+    <pre class="cmd-result rounded bg-secondary p-2 mt-3">{{ generatedCommand || cmd.cmdStr }}</pre>
+  </div>
+</div>
+</div>

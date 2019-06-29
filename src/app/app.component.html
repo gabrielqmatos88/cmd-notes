@@ -28,6 +28,7 @@
             <button class="ml-2 btn btn-secondary btn-pointer d-sm-none" data-toggle="collapse" data-target="#nav1" aria-controls="nav1" aria-expanded="false" aria-label="Toggle navigation">
               <i class="fas fa-bars"></i>
             </button>
+            <help-button target="#help-general"></help-button>
           </div>
         </div>
         <!-- <div class="btn btn-toolbar d-none">
@@ -86,6 +87,9 @@
         </div>
         <div class="col-12 col-sm-8 col-md-9 ml-lg-4 col-lg-8 main-content card">
           <router-outlet></router-outlet>
+          <help-modal modalId="help-general" title="asdfsdfasd" closeButton="true">
+
+          </help-modal>
         </div>
       </div>
 		</div>

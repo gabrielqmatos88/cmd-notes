@@ -1,0 +1,11 @@
+<div class="dot-dropdown" [ngClass]="{ 'open': open }">
+    <button class="btn btn-link btn-ellipsis m-0" (click)="toggle()">
+      <i class="fas fa-ellipsis-v"></i>
+    </button>
+    <div class="dot-dropdown-menu rounded p-2" [ngClass]="{ 'open': open }">
+      <button *ngFor="let item of items" class="dot-dropdown-item btn btn-link" (click)="select(item)">
+        <i class="fas {{item.icon}}" *ngIf="item.icon"></i>
+        {{ item.label }}
+      </button>
+    </div>
+</div>

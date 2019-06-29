@@ -10,6 +10,13 @@
   </div>
 </div>
 <div class="row" *ngIf="!selectedCommand">
+  <!-- <div class="col-12 mt-3 mb-3">
+    <app-cmd-preview [cmd]="commandList[0]"></app-cmd-preview>
+    <hr>
+  </div>
+  <div class="col-12 mt-3 mb-3">
+    <app-cmd-preview [cmd]="commandList[3]"></app-cmd-preview>
+  </div> -->
   <div class="col-12 col-md-7">
     <div class="input-group">
       <input class="form-control form-control-sm" type="text" name="term" [(ngModel)]="term">
@@ -49,36 +56,35 @@
   <div class="col-sm-12">
     <table *ngIf="!selectedCommand" class="table table-striped table-hover table-row-pointer">
       <tbody>
-        <tr *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')" (dblclick)="setCmd(cmd)">
-          <td class="text-break">{{ cmd.name }}</td>
-          <td class="text-right">
-            <div class="dropdown command-list-dropdown">
-                <button class="btn btn-link btn-ellipsis m-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <button class="dropdown-item" (click)="setCmd(cmd)">
-                    <i class="fas fa-edit"></i>
-                    Editar
-                  </button>
-                  <button class="dropdown-item" (click)="excluir(cmd)">
-                    <i class="fas fa-trash"></i>
-                      Excluir
+        <ng-container *ngFor="let cmd of (commandList | insensitiveSearch:term:'name')">
+            <tr (dblclick)="toggleCmd(cmd);cmdPreview.doPreview()">
+              <td class="text-break">
+                <i class="fas mr-3" (click)="cmd.opened = !cmd.opened;cmdPreview.doPreview()" [ngClass]="{ 'fa-caret-down': cmd.opened, 'fa-caret-right': !cmd.opened }"></i>{{ cmd.name }}</td>
+              <td class="clearfix">
+                <div class="dropdown command-list-dropdown float-right">
+                    <button class="btn btn-link btn-ellipsis m-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
                     </button>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item" (click)="setCmd(cmd);preview = false">
+                        <i class="fas fa-edit"></i>
+                        Editar
+                      </button>
+                      <button class="dropdown-item" (click)="excluir(cmd)">
+                        <i class="fas fa-trash"></i>
+                          Excluir
+                        </button>
+                    </div>
                 </div>
-            </div>
-              <!-- <div class="btn-group btn-group-sm">
-                  <button class="btn btn-secondary btn-hover-span m-0" (click)="setCmd(cmd)">
-                      <i class="fas fa-edit"></i>
-                      <span class="ml-2">Editar</span>
-                  </button>
-                  <button class="btn btn-danger btn-hover-span m-0" (click)="excluir(cmd)">
-                      <i class="fas fa-trash"></i>
-                      <span class="ml-2">Excluir</span>
-                  </button>
-              </div> -->
-          </td>
-        </tr>
+                <!-- <dot-dropdown [items]="createPopupItems(cmd)"></dot-dropdown> -->
+              </td>
+            </tr>
+            <tr class="fold" [ngClass]="{ 'opened': cmd.opened }">
+              <td colspan="2">
+                <app-cmd-preview [cmd]="cmd" #cmdPreview></app-cmd-preview>
+              </td>
+            </tr>
+        </ng-container>
       </tbody>
     </table>
   </div>
@@ -90,14 +96,18 @@
         <div class="row">
           <div class="col-8">
               <div class="btn-group" *ngIf="!!selectedCommand">
-                <button class="btn btn-secondary" [ngClass]="{ 'active': preview }" (click)="doPreview()">
+                <button class="btn btn-secondary" [ngClass]="{ 'active': preview && !editVariables }" (click)="startEdit();editVariables=false">
+                  <i class="fas fa-edit"></i>
+                  <span class="ml-2">Edit</span>
+                </button>
+                <button class="btn btn-secondary" [ngClass]="{ 'active': preview && !editVariables }" (click)="doPreview();editVariables=false">
                     <i class="fas fa-caret-square-right"></i>
                     <span class="ml-2">Preview</span>
                 </button>
-                <button class="btn btn-secondary" [ngClass]="{ 'active': !preview }" (click)="startEdit()">
-                    <i class="fas fa-edit"></i>
-                    <span class="ml-2">Edit</span>
-                </button>
+                <button class="btn btn-secondary" [ngClass]="{ 'active': editVariables }" (click)="editVariables = true;">
+                  <i class="fas fa-caret-square-right"></i>
+                  <span class="ml-2">Variaveis</span>
+              </button>
               </div>
           </div>
           <div class="col-4 text-right" *ngIf="!!selectedCommand">
@@ -145,9 +155,56 @@
           Command Expression
           <span class="field-error" *ngIf="!cmd.valid && (cmd.dirty || submitted)">Preencha o comando</span>
         </label>
-        <textarea class="form-control rounded-0" id="cmd" name="cmd" [(ngModel)]="commandStr" (mouseenter)="autoGrowTextZone($event)" (keyup)="autoGrowTextZone($event)" (change)="updateCommandStr($event)" #cmd="ngModel" required></textarea>
+        <textarea class="form-control rounded-0" id="cmd" name="cmd" [(ngModel)]="commandStr" (mouseenter)="autoGrowTextZone($event)" (keyup)="autoGrowTextZone($event);generateVariables()" (change)="updateCommandStr($event)" #cmd="ngModel" required></textarea>
     </div>
-    <button type="button" class="btn btn-secondary" (click)="save()">
+    <ng-container *ngIf="selectedCommand && selectedCommand.parameters && selectedCommand.parameters.length">
+      <hr>
+      <h3>Variaveis</h3>
+      <ng-container *ngFor="let parameter of selectedCommand?.parameters; let index=index">
+        <div class="form-row">
+          <div class="col-12">
+            <h4>#{{parameter.name}}</h4>
+            <hr>
+          </div>
+          <div class="form-group col-9">
+            <label for="p-{{parameter.name}}-label-{{index}}">Label <span class="text-muted">(opcional)</span></label>
+            <input type="text" class="form-control" name="p-{{parameter.name}}-label-{{index}}" placeholder="Label" id="p-{{parameter.name}}-label-{{index}}" [(ngModel)]="parameter.label" >
+          </div>
+          <div class="form-group col-9" *ngIf="!parameter.type">
+            <label for="p-{{parameter.name}}-{{index}}">Default value <span class="text-muted">(opcional)</span></label>
+            <input type="text" class="form-control" name="p-{{parameter.name}}-{{index}}" placeholder="Default value" id="p-{{parameter.name}}-{{index}}" [(ngModel)]="parameter.defaultValue" >
+          </div>
+          <div class="col-9" *ngIf="parameter.type === 2">
+            <label for="p-{{parameter.name}}-{{index}}">Default value</label>
+            <div class="d-block">
+              <toggle-switcher tgId="p-{{parameter.name}}-{{index}}" tgName="p-{{parameter.name}}-{{index}}" [(tgVal)]="parameter.defaultValue"></toggle-switcher>
+            </div>
+          </div>
+          <div class="form-group col-3" >
+            <label class="no-visible" for="p-{{parameter.name}}-tipo-{{index}}">tipo</label>
+            <!-- <input type="text" class="form-control" name="p-{{parameter.name}}-tipo-{{index}}" id="p-{{parameter.name}}-tipo-{{index}}" [(ngModel)]="parameter.tipo" > -->
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-block" type="button" id="p-{{parameter.name}}-tipo-{{index}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span *ngIf="!parameter.type">Text</span>
+                  <span *ngIf="parameter.type === 2">Boolean</span>
+                  <span *ngIf="parameter.type === 3">List</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button class="dropdown-item" (click)="parameter.type = 0">Text</button>
+                  <button class="dropdown-item" (click)="parameter.type = 0">Number</button>
+                  <button class="dropdown-item" (click)="parameter.type = 2">Boolean</button>
+                  <button class="dropdown-item" (click)="parameter.type = 3">List</button>
+                </div>
+              </div>
+          </div>
+          <div class="form-group col-12" *ngIf="parameter.type === 3">
+            <label for="p-{{parameter.name}}-list-{{index}}"></label>
+            <textarea id="p-{{parameter.name}}-list-{{index}}" name="p-{{parameter.name}}-list-{{index}}" class="form-control" rows="3" placeholder="values separated by ';' " [(ngModel)]="parameter.listParams"></textarea>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <button type="button" class="btn btn-secondary mb-3" (click)="save()">
       Save
     </button>
   </form>
@@ -157,11 +214,15 @@
     <ng-container *ngIf="!!selectedCommand.parameters && selectedCommand.parameters.length">
       <div class="row" *ngFor="let p of selectedCommand.parameters; let index=index;">
         <div class="col-md-8">
-            <div class="form-group" >
+            <div class="form-group" *ngIf="p.type === 'text'">
               <label for="{{index}}-{{p.name}}">
                 {{p.label}}
               </label>
               <input type="text" class="form-control" name="{{index}}-{{p.name}}" [(ngModel)]="p.value" required />
+            </div>
+            <div class="custom-control custom-switch"  *ngIf="p.type === 'boolean'">
+              <input type="checkbox" name="{{index}}-{{p.name}}" [(ngModel)]="p.value" class="custom-control-input" id="{{index}}-{{p.name}}">
+              <label class="custom-control-label" for="{{index}}-{{p.name}}">{{ p.label || '' }}</label>
             </div>
         </div>
       </div>

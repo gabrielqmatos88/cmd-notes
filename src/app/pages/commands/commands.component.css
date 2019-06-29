@@ -44,12 +44,6 @@ border-color: red;
 margin-left: 10px;
 }
 
-.preview-container {
-padding-top: 20px;
-padding-bottom: 20px;
-margin-left: 15px;
-}
-
 .cmd-list li.cmd-item:hover {
 background: #dee2e6;
 cursor: pointer;

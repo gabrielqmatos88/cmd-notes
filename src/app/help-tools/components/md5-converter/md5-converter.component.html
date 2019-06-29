@@ -6,7 +6,16 @@
     </label>
     <input type="text" class="form-control" id="md5Field" name="md5Field" [(ngModel)]="value" (keyup)="convert()" />
   </div>
-  <div *ngIf="!!result">
-    <p>{{ result }}</p>
+  <div class="input-group" *ngIf="!!result">
+      <p class="form-control">{{ result }}</p>
+      <div class="input-group-append">
+        <button class="btn btn-secondary" (click)="copyToClipboard()">
+          <i class="fas fa-copy"></i>
+          Copy
+        </button>
+      </div>
   </div>
+  <p class="alert alert-success mt-1" *ngIf="copied">
+    Copiado!
+  </p>
 </form>
